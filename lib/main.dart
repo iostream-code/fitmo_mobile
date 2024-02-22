@@ -1,5 +1,6 @@
 import 'package:fitmo_mobile/pages/details/details.dart';
 import 'package:fitmo_mobile/pages/home/home.dart';
+import 'package:fitmo_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,11 +29,13 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
+      // home: const SplashScreen(),
       routes: {
+        '/loader': (context) => const SplashScreen(),
         '/': (context) => const HomePage(),
         '/details': (context) => const DetailsPage(),
       },
-      initialRoute: '/',
+      initialRoute: '/loader',
     );
   }
 }
