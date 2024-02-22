@@ -98,7 +98,7 @@ class ActivityItem extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             const Icon(
-              Icons.wb_sunny_outlined,
+              Icons.local_fire_department,
               size: 12,
             ),
             const SizedBox(width: 5),

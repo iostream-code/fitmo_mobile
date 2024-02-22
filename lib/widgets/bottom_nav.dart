@@ -15,7 +15,7 @@ class BottomNav extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const Icon(
-              Icons.add_chart,
+              Icons.playlist_add_rounded,
             ),
             const Icon(
               Icons.search,
@@ -60,7 +60,7 @@ class BottomNav extends StatelessWidget {
               ),
             ),
             const Icon(
-              Icons.settings,
+              Icons.person,
             ),
           ],
         ),
