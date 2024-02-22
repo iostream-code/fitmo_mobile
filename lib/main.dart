@@ -1,5 +1,5 @@
-import 'package:fitmo_mobile/pages/details/details.dart';
-import 'package:fitmo_mobile/pages/home/home.dart';
+import 'package:fitmo_mobile/pages/activity/activity_screen.dart';
+import 'package:fitmo_mobile/pages/home/home_screen.dart';
 import 'package:fitmo_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/loader': (context) => const SplashScreen(),
         '/': (context) => const HomePage(),
-        '/details': (context) => const DetailsPage(),
+        '/activity': (context) => const DetailsPage(),
       },
       initialRoute: '/loader',
     );
