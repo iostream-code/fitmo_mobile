@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Fitness Tracker',
+      title: 'Fitness Monitoring',
       theme: ThemeData(
         fontFamily: 'Roboto',
         textTheme: const TextTheme(
