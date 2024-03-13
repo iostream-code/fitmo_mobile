@@ -1,9 +1,10 @@
+import 'package:fitmo_mobile/models/heart_rate.dart';
 import 'package:health/health.dart';
 
 class FitnessRepository {
   final health = HealthFactory(useHealthConnectIfAvailable: true);
 
-  Future<bool> getHeartRate() async {
+  Future<List<HeartRate>> getHeartRate() async {
     bool requested = await health.requestAuthorization([
       HealthDataType.HEART_RATE,
     ]);
@@ -17,10 +18,17 @@ class FitnessRepository {
         ],
       );
 
-      return healthData.isNotEmpty;
+      return healthData.map((e) {
+        return HeartRate(
+          e.value as double,
+          e.unit.toString(),
+          e.dateFrom,
+          e.dateTo,
+        );
+      }).toList();
     }
 
-    return false;
+    return [];
   }
 
   Future<bool> getBloodOxygen() async {
