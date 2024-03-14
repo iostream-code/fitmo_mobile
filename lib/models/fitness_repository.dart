@@ -1,8 +1,10 @@
+import 'package:fitmo_mobile/models/blood_oxygen.dart';
 import 'package:fitmo_mobile/models/heart_rate.dart';
 import 'package:health/health.dart';
 
 class FitnessRepository {
-  final health = HealthFactory(useHealthConnectIfAvailable: true);
+  // final health = HealthFactory(useHealthConnectIfAvailable: true);
+  final health = HealthFactory();
 
   Future<List<HeartRate>> getHeartRate() async {
     bool requested = await health.requestAuthorization([
@@ -19,11 +21,13 @@ class FitnessRepository {
       );
 
       return healthData.map((e) {
+        var b = e;
+        print(b.value.toJson()['numericValue']);
         return HeartRate(
-          e.value as double,
-          e.unit.toString(),
-          e.dateFrom,
-          e.dateTo,
+          double.parse(b.value.toJson()['numericValue']),
+          b.unit.toString(),
+          b.dateFrom,
+          b.dateTo,
         );
       }).toList();
     }
@@ -31,7 +35,7 @@ class FitnessRepository {
     return [];
   }
 
-  Future<bool> getBloodOxygen() async {
+  Future<List<BloodOxygen>> getBloodOxygen() async {
     bool requested = await health.requestAuthorization([
       HealthDataType.BLOOD_OXYGEN,
     ]);
@@ -45,10 +49,19 @@ class FitnessRepository {
         ],
       );
 
-      return healthData.isNotEmpty;
+      return healthData.map((e) {
+        var b = e;
+        print(b.value.toJson()['numericValue']);
+        return BloodOxygen(
+          double.parse(b.value.toJson()['numericValue']),
+          b.unit.toString(),
+          b.dateFrom,
+          b.dateTo,
+        );
+      }).toList();
     }
 
-    return false;
+    return [];
   }
 }
 
