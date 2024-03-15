@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "181227030575",
+    "project_id": "fitmo-mobile-415203",
+    "storage_bucket": "fitmo-mobile-415203.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181227030575:android:b9881ba45c837342a1deda",
+        "android_client_info": {
+          "package_name": "com.example.fitmo_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181227030575-ko6lnbuon328hlfso50k70k8b2lii85o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fitmo_mobile",
+            "certificate_hash": "0fe1a25d966f0ad6dbd1815babbde54b96e34a2a"
+          }
+        },
+        {
+          "client_id": "181227030575-9di5ldus5cflbbtfsjijh2st7l92rudt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcY3sJB7PdxYHFapDSzyZ_yEgt7Rcv0E8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181227030575-9di5ldus5cflbbtfsjijh2st7l92rudt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

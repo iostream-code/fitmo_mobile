@@ -1,12 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:fitmo_mobile/pages/activity/activity_screen.dart';
 import 'package:fitmo_mobile/pages/home/home_screen.dart';
 import 'package:fitmo_mobile/splash_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
+  // await Firebase.initializeApp();
+
+  await Permission.activityRecognition.request();
+  await Permission.location.request();
 
   runApp(const MyApp());
 }
@@ -33,7 +40,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/loader': (context) => const SplashScreen(),
         '/': (context) => const HomePage(),
-        '/activity': (context) => const DetailsPage(),
+        '/activity': (context) => const ActivityPage(),
       },
       initialRoute: '/loader',
     );
