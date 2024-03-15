@@ -1,7 +1,7 @@
 import 'package:fitmo_mobile/pages/home/home_controller.dart';
-import 'package:fitmo_mobile/pages/home/widgets/activity.dart';
 import 'package:fitmo_mobile/pages/home/widgets/current.dart';
 import 'package:fitmo_mobile/pages/home/widgets/header.dart';
+import 'package:fitmo_mobile/pages/home/widgets/testing.dart';
 import 'package:fitmo_mobile/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
@@ -15,27 +15,41 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   controller.getData();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => controller.getData(),
-        child: const Icon(Icons.refresh),
-      ),
-      body: const Column(
+    return const Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => controller.getData(),
+      //   child: const Icon(Icons.refresh),
+      // ),
+      body: Column(
         children: [
           AppHeader(),
           CurrentPrograms(),
-          RecentActivities(),
+          // RecentActivities(),
+          Testing(),
           BottomNav(),
         ],
       ),
+      // body: ValueListenableBuilder(
+      //   valueListenable: controller.bloodGlucose,
+      //   builder: (context, value, child) {
+      //     return GridView(
+      //       padding: const EdgeInsets.all(5),
+      //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //           crossAxisCount: 2,
+      //           childAspectRatio: 1,
+      //           mainAxisSpacing: 15,
+      //           crossAxisSpacing: 15),
+      //       children: [
+      //         for (final bloodGlucose in value)
+      //           MyCard(
+      //             bloodGlucose: bloodGlucose,
+      //           ),
+      //       ],
+      //     );
+      //   },
+      // ),
     );
   }
 }

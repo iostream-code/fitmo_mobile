@@ -1,10 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:fitmo_mobile/pages/activity/activity_screen.dart';
-import 'package:fitmo_mobile/pages/home/home_screen.dart';
-import 'package:fitmo_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:fitmo_mobile/pages/activity/activity_screen.dart';
+import 'package:fitmo_mobile/pages/home/home_screen.dart';
+import 'package:fitmo_mobile/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/loader': (context) => const SplashScreen(),
         '/': (context) => const HomePage(),
-        '/activity': (context) => const DetailsPage(),
+        '/activity': (context) => const ActivityPage(),
       },
       initialRoute: '/loader',
     );

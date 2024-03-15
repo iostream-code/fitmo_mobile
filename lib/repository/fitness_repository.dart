@@ -1,3 +1,4 @@
+import 'package:fitmo_mobile/models/blood_glucose.dart';
 import 'package:fitmo_mobile/models/blood_oxygen.dart';
 import 'package:fitmo_mobile/models/heart_rate.dart';
 import 'package:health/health.dart';
@@ -7,23 +8,52 @@ class FitnessRepository {
   final health = HealthFactory();
 
   Future<List<HeartRate>> getHeartRate() async {
+    bool requested =
+        await health.requestAuthorization([HealthDataType.HEART_RATE]);
+
+    print('Class has been accessed!');
+
+    if (requested) {
+      List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
+        DateTime.now().subtract(const Duration(days: 1)),
+        DateTime.now(),
+        [HealthDataType.HEART_RATE],
+      );
+
+      return fitnessData.map((e) {
+        var b = e;
+        // print(b.value.toJson()['numericValue']);
+        print('Fitness Data Accessed!');
+        return HeartRate(
+          // double.parse(b.value.toJson()['numericValue']),
+          double.parse(b.value.toString()),
+          b.unitString,
+          b.dateFrom,
+          b.dateTo,
+        );
+      }).toList();
+    }
+    return [];
+  }
+
+  Future<List<BloodOxygen>> getBloodOxygen() async {
     bool requested = await health.requestAuthorization([
-      HealthDataType.HEART_RATE,
+      HealthDataType.BLOOD_OXYGEN,
     ]);
 
     if (requested) {
-      List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(
+      List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
         DateTime.now().subtract(const Duration(days: 7)),
         DateTime.now(),
         [
-          HealthDataType.HEART_RATE,
+          HealthDataType.BLOOD_OXYGEN,
         ],
       );
 
-      return healthData.map((e) {
+      return fitnessData.map((e) {
         var b = e;
         print(b.value.toJson()['numericValue']);
-        return HeartRate(
+        return BloodOxygen(
           double.parse(b.value.toJson()['numericValue']),
           b.unit.toString(),
           b.dateFrom,
@@ -35,24 +65,26 @@ class FitnessRepository {
     return [];
   }
 
-  Future<List<BloodOxygen>> getBloodOxygen() async {
+  Future<List<BloodGlucose>> getBloodGlucose() async {
     bool requested = await health.requestAuthorization([
-      HealthDataType.BLOOD_OXYGEN,
+      HealthDataType.BLOOD_GLUCOSE,
     ]);
 
     if (requested) {
-      List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(
+      print('Class has been accessed!');
+
+      List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
         DateTime.now().subtract(const Duration(days: 7)),
         DateTime.now(),
         [
-          HealthDataType.BLOOD_OXYGEN,
+          HealthDataType.BLOOD_GLUCOSE,
         ],
       );
 
-      return healthData.map((e) {
+      return fitnessData.map((e) {
         var b = e;
         print(b.value.toJson()['numericValue']);
-        return BloodOxygen(
+        return BloodGlucose(
           double.parse(b.value.toJson()['numericValue']),
           b.unit.toString(),
           b.dateFrom,
