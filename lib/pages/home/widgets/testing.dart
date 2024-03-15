@@ -45,7 +45,7 @@ class _TestingState extends State<Testing> {
                 valueListenable: controller.bloodGlucose,
                 builder: (context, value, child) {
                   return GridView(
-                    padding: const EdgeInsets.all(5),
+                    // padding: const EdgeInsets.all(5),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -54,15 +54,49 @@ class _TestingState extends State<Testing> {
                       crossAxisSpacing: 15,
                     ),
                     children: [
+                      // Card(
+                      //   child: Column(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Text('Report Card'),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Card(
+                      //   child: Column(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Text('Report Card'),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Card(
+                      //   child: Column(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Text('Report Card'),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Card(
+                      //   child: Column(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Text('Report Card'),
+                      //     ],
+                      //   ),
+                      // ),
                       for (final bloodGlucose in value)
                         Card(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(bloodGlucose.value.toString()),
-                              // Text(bloodGlucose.unit),
-                              // Text(bloodGlucose.dateFrom.toString()),
-                              // Text(bloodGlucose.dateTo.toString()),
+                              Text(
+                                bloodGlucose.value.toStringAsFixed(2),
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                              Text(bloodGlucose.unit),
+                              Text(bloodGlucose.dateFrom.toString()),
                             ],
                           ),
                         ),
