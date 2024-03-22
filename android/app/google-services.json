@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "181227030575-4n91m4kojer0n0faii3evi6irl7e421k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fitmo_mobile",
+            "certificate_hash": "098199cc221389c90f996744d21f016dc6af7859"
+          }
+        },
+        {
           "client_id": "181227030575-ko6lnbuon328hlfso50k70k8b2lii85o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
