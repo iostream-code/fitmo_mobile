@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class BottomNav extends StatelessWidget {
   const BottomNav({Key? key}) : super(key: key);
@@ -17,8 +18,13 @@ class BottomNav extends StatelessWidget {
             const Icon(
               Icons.playlist_add_rounded,
             ),
-            const Icon(
-              Icons.search,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/report');
+              },
+              child: const Icon(
+                Icons.analytics,
+              ),
             ),
             Transform.translate(
               offset: const Offset(0, -15),

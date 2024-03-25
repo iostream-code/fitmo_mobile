@@ -1,7 +1,7 @@
 import 'package:fitmo_mobile/pages/home/home_controller.dart';
+import 'package:fitmo_mobile/pages/home/widgets/activity.dart';
 import 'package:fitmo_mobile/pages/home/widgets/current.dart';
 import 'package:fitmo_mobile/pages/home/widgets/header.dart';
-import 'package:fitmo_mobile/pages/home/widgets/testing.dart';
 import 'package:fitmo_mobile/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
@@ -26,8 +26,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           AppHeader(),
           CurrentPrograms(),
-          // RecentActivities(),
-          Testing(),
+          RecentActivities(),
           BottomNav(),
         ],
       ),
