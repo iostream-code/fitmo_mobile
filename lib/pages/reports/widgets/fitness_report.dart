@@ -1,6 +1,7 @@
 import 'package:fitmo_mobile/models/fitness_data.dart';
 import 'package:fitmo_mobile/services/fitness_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class FitnessReport extends StatefulWidget {
   const FitnessReport({super.key});
@@ -14,11 +15,42 @@ class _FitnessReportState extends State<FitnessReport> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          fitnessCard(),
-        ],
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 8,
+        ),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(
+                right: 20,
+                left: 20,
+                top: 10,
+                bottom: 0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Data from Firebase",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Icon(
+                    Icons.refresh,
+                    size: 16,
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: fitnessCard(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -52,12 +84,19 @@ class _FitnessReportState extends State<FitnessReport> {
                 ),
                 child: ListTile(
                   tileColor: Colors.blue[100],
-                  leading: Text(data.unit),
+                  leading: Text(
+                    data.value.toString(),
+                    style: const TextStyle(
+                      fontSize: 24,
+                    ),
+                  ),
                   title: Text(data.fitnessType),
                   subtitle: Text(
-                    data.value.toString(),
+                    DateFormat('dd-MM-yyyy h a').format(
+                      data.dateFrom.toDate(),
+                    ),
                   ),
-                  trailing: Icon(Icons.more_vert),
+                  trailing: const Icon(Icons.delete),
                   onLongPress: () {
                     _database.deleteFitnessData(dataId);
                   },

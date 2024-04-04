@@ -1,6 +1,6 @@
 import 'package:fitmo_mobile/pages/home/home_controller.dart';
 import 'package:fitmo_mobile/pages/home/widgets/activity.dart';
-import 'package:fitmo_mobile/pages/home/widgets/current.dart';
+import 'package:fitmo_mobile/pages/home/widgets/programs.dart';
 import 'package:fitmo_mobile/pages/home/widgets/header.dart';
 import 'package:fitmo_mobile/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
