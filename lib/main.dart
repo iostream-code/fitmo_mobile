@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitmo_mobile/firebase_options.dart';
 import 'package:fitmo_mobile/pages/reports/report_page.dart';
+import 'package:fitmo_mobile/pages/reports/widgets/fitness_data_add.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:fitmo_mobile/pages/activity/activity_page.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/loader': (context) => const SplashScreen(),
         '/': (context) => const HomePage(),
         '/report': (context) => const ReportPage(),
+        '/report/add': (context) => const FitnessDataAdd(),
         '/activity': (context) => const ActivityPage(),
       },
       initialRoute: '/loader',

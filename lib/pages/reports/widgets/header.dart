@@ -1,8 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitmo_mobile/models/fitness_data.dart';
+import 'package:fitmo_mobile/services/fitness_database.dart';
 import 'package:flutter/material.dart';
 
-class ReportHeader extends StatelessWidget {
+class ReportHeader extends StatefulWidget {
   const ReportHeader({super.key});
 
+  @override
+  State<ReportHeader> createState() => _ReportHeaderState();
+}
+
+class _ReportHeaderState extends State<ReportHeader> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -12,13 +20,13 @@ class ReportHeader extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushNamed("/");
         },
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back_ios,
           color: Colors.white,
           size: 16,
         ),
       ),
-      title: Text(
+      title: const Text(
         "Record Measurements",
         style: TextStyle(
           color: Colors.white,
@@ -29,17 +37,18 @@ class ReportHeader extends StatelessWidget {
       centerTitle: true,
       actions: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed("/report/add");
+          },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.all(5),
             maximumSize: const Size(30, 30),
             minimumSize: const Size(30, 30),
             shape: const CircleBorder(),
-            // backgroundColor: Color.fromARGB(255, 218, 220, 255),
             backgroundColor: Colors.white,
-            foregroundColor: Color.fromARGB(255, 59, 59, 250),
+            foregroundColor: Colors.blue[800],
           ),
-          child: Icon(
+          child: const Icon(
             Icons.add,
             size: 18,
           ),
