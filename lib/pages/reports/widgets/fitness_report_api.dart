@@ -49,6 +49,7 @@ class _FitnessReportApiState extends State<FitnessReportApi> {
 
   Widget fitnessCard() {
     return ListView(
+      padding: EdgeInsets.zero,
       children: [
         Container(
           height: 50,

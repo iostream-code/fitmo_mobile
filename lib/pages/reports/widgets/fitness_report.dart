@@ -65,6 +65,7 @@ class _FitnessReportState extends State<FitnessReport> {
         }
 
         return ListView.builder(
+          padding: EdgeInsets.zero,
           itemCount: fitnessData.length,
           itemBuilder: (context, index) {
             FitnessData data = fitnessData[index].data();
@@ -86,58 +87,36 @@ class _FitnessReportState extends State<FitnessReport> {
                     data.dateFrom.toDate(),
                   ),
                 ),
-                trailing: const Icon(Icons.delete),
-                onLongPress: () {
-                  _database.deleteFitnessData(dataId);
-                },
+                // trailing: IconButton(
+                //   onPressed: () {
+                //     _database.deleteFitnessData(dataId);
+                //   },
+                //   icon: const Icon(Icons.delete),
+                // ),
+                trailing: IconButton(
+                  onPressed: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: Text("Delete Confirmation"),
+                      content: Text("Are You sure delete this Data?"),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            _database.deleteFitnessData(dataId);
+                            Navigator.pop(context);
+                          },
+                          child: Text("Yes"),
+                        ),
+                      ],
+                    ),
+                  ),
+                  icon: const Icon(Icons.delete),
+                ),
               ),
             );
           },
         );
       },
-    );
-  }
-
-  Widget myCard() {
-    return ListView(
-      children: [
-        Container(
-          height: 50,
-          margin: EdgeInsets.only(bottom: 5),
-          color: Colors.amber[600],
-          child: const Text("data 1"),
-        ),
-        Container(
-          height: 50,
-          margin: EdgeInsets.only(bottom: 5),
-          color: Colors.amber[500],
-          child: const Text("data 2"),
-        ),
-        Container(
-          height: 50,
-          margin: EdgeInsets.only(bottom: 5),
-          color: Colors.amber[100],
-          child: const Text("data 3"),
-        ),
-        Container(
-          height: 50,
-          margin: EdgeInsets.only(bottom: 5),
-          color: Colors.amberAccent[600],
-          child: const Text("data 4"),
-        ),
-        Container(
-          height: 50,
-          margin: EdgeInsets.only(bottom: 5),
-          color: Colors.amberAccent[500],
-          child: const Text("data 5"),
-        ),
-        Container(
-          height: 50,
-          margin: EdgeInsets.only(bottom: 5),
-          color: Colors.amberAccent[100],
-          child: const Text("data 6"),
-        ),
-      ],
     );
   }
 }

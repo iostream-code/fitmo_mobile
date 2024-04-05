@@ -23,6 +23,7 @@ class RecentActivities extends StatelessWidget {
           const SizedBox(height: 15),
           Expanded(
             child: ListView.builder(
+              padding: EdgeInsets.zero,
               itemCount: 8,
               itemBuilder: (context, index) => const ActivityItem(),
             ),

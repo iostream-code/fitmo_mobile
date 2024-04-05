@@ -1,5 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitmo_mobile/models/fitness_data.dart';
 import 'package:fitmo_mobile/services/fitness_database.dart';
 import 'package:flutter/material.dart';
+
+const List<String> fitnessType = <String>[
+  'HEART_RATE',
+  'BLOOD_OXYGEN',
+  'BLOOD_GLUCOSE',
+];
 
 class FitnessDataAdd extends StatefulWidget {
   const FitnessDataAdd({super.key});
@@ -14,6 +22,8 @@ class _FitnessDataAddState extends State<FitnessDataAdd> {
   final TextEditingController _unitController = TextEditingController();
 
   final FitnessDatabase _database = FitnessDatabase();
+
+  String dropdownValue = fitnessType.first;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +48,8 @@ class _FitnessDataAddState extends State<FitnessDataAdd> {
   }
 
   Widget formField() {
+    Size fixedScreen = MediaQuery.of(context).size;
+
     return FormField(builder: (state) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,29 +63,83 @@ class _FitnessDataAddState extends State<FitnessDataAdd> {
                   ),
                   child: Column(
                     children: [
-                      TextFormField(
+                      TextField(
+                        controller: _valueController,
                         decoration: const InputDecoration(
-                          hintText: "Value",
+                          labelText: "Value",
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
                         ),
-                        onChanged: (value) => state.didChange(value),
+                        keyboardType: TextInputType.number,
                       ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: "Value",
-                        ),
-                        onChanged: (value) => state.didChange(value),
+                      const SizedBox(
+                        height: 20,
                       ),
-                      TextFormField(
+                      DropdownMenu(
+                        width: fixedScreen.width,
+                        controller: _fitnessTypeController,
+                        label: const Text("Fitness Type"),
+                        initialSelection: fitnessType.first,
+                        onSelected: (String? value) {
+                          setState(() {
+                            dropdownValue = value!;
+                          });
+                        },
+                        dropdownMenuEntries: fitnessType
+                            .map<DropdownMenuEntry<String>>((String value) {
+                          return DropdownMenuEntry<String>(
+                              value: value, label: value);
+                        }).toList(),
+                      ),
+                      TextField(
+                        controller: _unitController,
                         decoration: const InputDecoration(
-                          hintText: "Value",
+                          labelText: "Unit",
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
                         ),
-                        onChanged: (value) => state.didChange(value),
                       ),
                     ],
                   ),
                 ),
               ),
             ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                FitnessData data = FitnessData(
+                  value: int.parse(_valueController.text),
+                  unit: _unitController.text,
+                  fitnessType: _fitnessTypeController.text,
+                  dateFrom: Timestamp.now(),
+                  dateTo: Timestamp.now(),
+                );
+                _database.addFitnessData(data);
+                Navigator.pop(context);
+                _valueController.clear();
+                _unitController.clear();
+                _fitnessTypeController.clear();
+              },
+              child: const Text(
+                "save",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+            ),
           ),
         ],
       );

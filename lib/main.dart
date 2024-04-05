@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Fitness Monitoring',
       theme: ThemeData(
+        useMaterial3: true,
         fontFamily: 'Roboto',
         textTheme: const TextTheme(
           displayLarge: TextStyle(
