@@ -9,16 +9,22 @@ class RecentActivities extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+      padding: const EdgeInsets.symmetric(
+        vertical: 20,
+        horizontal: 30,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Recent Activity',
-              style: Theme.of(context).textTheme.displayLarge),
-          const SizedBox(height: 20),
+          Text(
+            'Recent Activity',
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
+          const SizedBox(height: 15),
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
+              padding: EdgeInsets.zero,
+              itemCount: 8,
               itemBuilder: (context, index) => const ActivityItem(),
             ),
           )
@@ -34,9 +40,7 @@ class ActivityItem extends StatelessWidget {
   static const activities = [
     'Running',
     'Swimming',
-    'Hiking',
-    'Walking',
-    'Cycling'
+    'Cycling',
   ];
 
   @override

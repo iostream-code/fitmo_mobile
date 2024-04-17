@@ -17,8 +17,13 @@ class BottomNav extends StatelessWidget {
             const Icon(
               Icons.playlist_add_rounded,
             ),
-            const Icon(
-              Icons.search,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/report');
+              },
+              child: const Icon(
+                Icons.analytics,
+              ),
             ),
             Transform.translate(
               offset: const Offset(0, -15),

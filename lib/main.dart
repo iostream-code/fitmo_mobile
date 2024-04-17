@@ -1,16 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fitmo_mobile/firebase_options.dart';
+import 'package:fitmo_mobile/pages/reports/report_page.dart';
+import 'package:fitmo_mobile/pages/reports/widgets/fitness_data_add.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:fitmo_mobile/pages/activity/activity_screen.dart';
-import 'package:fitmo_mobile/pages/home/home_screen.dart';
+import 'package:fitmo_mobile/pages/activity/activity_page.dart';
+import 'package:fitmo_mobile/pages/home/home_page.dart';
 import 'package:fitmo_mobile/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   await Permission.activityRecognition.request();
   await Permission.location.request();
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Fitness Monitoring',
       theme: ThemeData(
+        useMaterial3: true,
         fontFamily: 'Roboto',
         textTheme: const TextTheme(
           displayLarge: TextStyle(
@@ -40,6 +43,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/loader': (context) => const SplashScreen(),
         '/': (context) => const HomePage(),
+        '/report': (context) => const ReportPage(),
+        '/report/add': (context) => const FitnessDataAdd(),
         '/activity': (context) => const ActivityPage(),
       },
       initialRoute: '/loader',

@@ -30,7 +30,7 @@ class _CurrentProgramsState extends State<CurrentPrograms> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Current Programs',
+                'Recommendation Programs',
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               const Icon(
