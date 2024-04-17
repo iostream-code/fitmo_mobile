@@ -1,16 +1,15 @@
 import 'package:fitmo_mobile/pages/reports/controller/fitness_report_controller.dart';
-import 'package:fitmo_mobile/pages/reports/widgets/fitness_api_card.dart';
-import 'package:fitmo_mobile/services/fitness_database.dart';
+import 'package:fitmo_mobile/pages/reports/widgets/heart_rate_card.dart';
 import 'package:flutter/material.dart';
 
-class FitnessReportApi extends StatefulWidget {
-  const FitnessReportApi({super.key});
+class HeartRateReportApi extends StatefulWidget {
+  const HeartRateReportApi({super.key});
 
   @override
-  State<FitnessReportApi> createState() => _FitnessReportApiState();
+  State<HeartRateReportApi> createState() => _HeartRateReportApiState();
 }
 
-class _FitnessReportApiState extends State<FitnessReportApi> {
+class _HeartRateReportApiState extends State<HeartRateReportApi> {
   final controller = FitnessReportController();
 
   @override
@@ -28,14 +27,14 @@ class _FitnessReportApiState extends State<FitnessReportApi> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "Data from API",
+                  "Heart Rate Measurements",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 IconButton(
                   onPressed: () {
-                    controller.getData();
+                    controller.getHeartRateData();
                   },
                   icon: const Icon(Icons.refresh),
                   iconSize: 16,
@@ -61,7 +60,7 @@ class _FitnessReportApiState extends State<FitnessReportApi> {
                     ),
                     children: [
                       for (final heartRate in value)
-                        FitnessApiCard(heartRate: heartRate)
+                        HeartRateCard(heartRate: heartRate)
                     ],
                   );
                 },

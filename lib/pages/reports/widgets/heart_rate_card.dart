@@ -1,10 +1,10 @@
 import 'package:fitmo_mobile/models/heart_rate.dart';
 import 'package:flutter/material.dart';
 
-class FitnessApiCard extends StatelessWidget {
+class HeartRateCard extends StatelessWidget {
   final HeartRate heartRate;
 
-  const FitnessApiCard({super.key, required this.heartRate});
+  const HeartRateCard({super.key, required this.heartRate});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class FitnessApiCard extends StatelessWidget {
             heartRate.value.toStringAsFixed(2),
             style: const TextStyle(fontSize: 24),
           ),
-          Text(heartRate.unit),
+          Text(heartRate.dataType),
           Text(
             heartRate.dateFrom.toString(),
           ),
