@@ -87,25 +87,31 @@ class _FitnessReportState extends State<FitnessReport> {
                     data.dateFrom.toDate(),
                   ),
                 ),
-                // trailing: IconButton(
-                //   onPressed: () {
-                //     _database.deleteFitnessData(dataId);
-                //   },
-                //   icon: const Icon(Icons.delete),
-                // ),
                 trailing: IconButton(
                   onPressed: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: Text("Delete Confirmation"),
-                      content: Text("Are You sure delete this Data?"),
+                      title: const Text("Delete Confirmation"),
+                      content: const Text("Are You sure delete this Data?"),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {
                             _database.deleteFitnessData(dataId);
                             Navigator.pop(context);
                           },
-                          child: Text("Yes"),
+                          child: const Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "No",
+                            style: TextStyle(color: Colors.red),
+                          ),
                         ),
                       ],
                     ),

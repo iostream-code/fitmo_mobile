@@ -7,10 +7,10 @@ class FitnessCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FitnessDatabase _database = FitnessDatabase();
+    final FitnessDatabase database = FitnessDatabase();
 
     return StreamBuilder(
-      stream: _database.getFitnessData(),
+      stream: database.getFitnessData(),
       builder: (context, snapshots) {
         List fitnessData = snapshots.data?.docs ?? [];
 
@@ -34,7 +34,7 @@ class FitnessCard extends StatelessWidget {
                 data.value.toString(),
               ),
               onLongPress: () {
-                _database.deleteFitnessData(dataId);
+                database.deleteFitnessData(dataId);
               },
             );
           },

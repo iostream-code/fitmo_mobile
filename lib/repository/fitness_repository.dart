@@ -11,9 +11,8 @@ class FitnessRepository {
     bool requested =
         await health.requestAuthorization([HealthDataType.HEART_RATE]);
 
-    print('Class has been accessed!');
-
     if (requested) {
+      var now = DateTime.now();
       List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
         DateTime.now().subtract(const Duration(days: 1)),
         DateTime.now(),
@@ -22,11 +21,10 @@ class FitnessRepository {
 
       return fitnessData.map((e) {
         var b = e;
-        // print(b.value.toJson()['numericValue']);
-        print('Fitness Data Accessed!');
+        print(b.value.toJson()['numericValue']);
         return HeartRate(
-          // double.parse(b.value.toJson()['numericValue']),
-          double.parse(b.value.toString()),
+          double.parse(b.value.toJson()['numericValue']),
+          // double.parse(b.value.toString()),
           b.unitString,
           b.dateFrom,
           b.dateTo,
@@ -72,6 +70,7 @@ class FitnessRepository {
 
     if (requested) {
       print('Class has been accessed!');
+      print(requested);
 
       List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
         DateTime.now().subtract(const Duration(days: 7)),
