@@ -1,5 +1,6 @@
 import 'package:fitmo_mobile/models/foot_steps.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class FootStepsCard extends StatelessWidget {
   final FootSteps footSteps;
@@ -8,19 +9,75 @@ class FootStepsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "${footSteps.value.toStringAsFixed(0)} step",
-            style: const TextStyle(fontSize: 24),
+    return SizedBox(
+      width: 115,
+      child: Card(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.orange,
+                Colors.amber,
+                Colors.yellow,
+              ],
+            ),
+            borderRadius: BorderRadius.circular(10),
           ),
-          Text(footSteps.dataType),
-          Text(
-            footSteps.dateFrom.toString(),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Icon(
+                    Icons.info_outline,
+                    size: 18,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(
+                      Icons.directions_walk,
+                      size: 32,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          footSteps.dataType,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "${footSteps.value.toStringAsFixed(0)} count",
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    DateFormat('MMM d, kk:mm').format(footSteps.dateFrom),
+                    // footSteps.dateFrom.toString(),
+                  ),
+                )
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }

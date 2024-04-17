@@ -14,8 +14,13 @@ class BottomNav extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Icon(
-              Icons.playlist_add_rounded,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/record');
+              },
+              child: const Icon(
+                Icons.playlist_add_rounded,
+              ),
             ),
             GestureDetector(
               onTap: () {
