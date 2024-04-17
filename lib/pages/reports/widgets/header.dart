@@ -32,25 +32,25 @@ class _ReportHeaderState extends State<ReportHeader> {
         ),
       ),
       centerTitle: true,
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed("/report/add");
-          },
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.all(5),
-            maximumSize: const Size(30, 30),
-            minimumSize: const Size(30, 30),
-            shape: const CircleBorder(),
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.blue[800],
-          ),
-          child: const Icon(
-            Icons.add,
-            size: 18,
-          ),
-        ),
-      ],
+      // actions: [
+      //   TextButton(
+      //     onPressed: () {
+      //       Navigator.of(context).pushNamed("/report/add");
+      //     },
+      //     style: ElevatedButton.styleFrom(
+      //       padding: const EdgeInsets.all(5),
+      //       maximumSize: const Size(30, 30),
+      //       minimumSize: const Size(30, 30),
+      //       shape: const CircleBorder(),
+      //       backgroundColor: Colors.white,
+      //       foregroundColor: Colors.blue[800],
+      //     ),
+      //     child: const Icon(
+      //       Icons.add,
+      //       size: 18,
+      //     ),
+      //   ),
+      // ],
     );
   }
 }
