@@ -24,10 +24,9 @@ class _ReportHeaderState extends State<ReportHeader> {
         ),
       ),
       title: const Text(
-        "Record Measurements",
+        "Google Fit API",
         style: TextStyle(
           color: Colors.white,
-          fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
       ),

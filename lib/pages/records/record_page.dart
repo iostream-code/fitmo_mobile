@@ -1,5 +1,5 @@
 import 'package:fitmo_mobile/pages/records/widgets/record_header.dart';
-import 'package:fitmo_mobile/pages/records/widgets/records_show.dart';
+import 'package:fitmo_mobile/pages/records/widgets/record_show.dart';
 import 'package:fitmo_mobile/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 

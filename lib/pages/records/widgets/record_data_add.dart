@@ -48,7 +48,7 @@ class _RecordDataAddState extends State<RecordDataAdd> {
   }
 
   Widget formField() {
-    Size fixedScreen = MediaQuery.of(context).size;
+    // Size fixedScreen = MediaQuery.of(context).size;
 
     return FormField(builder: (state) {
       return Padding(
@@ -131,9 +131,6 @@ class _RecordDataAddState extends State<RecordDataAdd> {
                     color: Colors.black,
                     fontSize: 16,
                   ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
                 ),
                 onPressed: () {
                   FitnessData data = FitnessData(
