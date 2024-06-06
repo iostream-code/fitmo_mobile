@@ -69,8 +69,13 @@ class BottomNav extends StatelessWidget {
                 Icons.date_range,
               ),
             ),
-            const Icon(
-              Icons.person,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/profile');
+              },
+              child: const Icon(
+                Icons.person,
+              ),
             ),
           ],
         ),

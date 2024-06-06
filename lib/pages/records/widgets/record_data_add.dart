@@ -7,6 +7,8 @@ const List<String> fitnessType = <String>[
   'HEART_RATE',
   'BLOOD_OXYGEN',
   'BLOOD_GLUCOSE',
+  'STEPS',
+  'CALORIES',
 ];
 
 class RecordDataAdd extends StatefulWidget {

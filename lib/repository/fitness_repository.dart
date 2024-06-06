@@ -15,7 +15,7 @@ class FitnessRepository {
       var now = DateTime.now();
 
       List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
-        now.subtract(const Duration(days: 7)),
+        now.subtract(const Duration(days: 1)),
         now,
         [HealthDataType.HEART_RATE],
       );
@@ -111,7 +111,7 @@ class FitnessRepository {
       var now = DateTime.now();
 
       List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
-        now.subtract(const Duration(days: 7)),
+        now.subtract(const Duration(days: 1)),
         now,
         [HealthDataType.STEPS],
       );

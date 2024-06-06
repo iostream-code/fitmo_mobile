@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitmo_mobile/firebase_options.dart';
+import 'package:fitmo_mobile/pages/profile/profile_page.dart';
 import 'package:fitmo_mobile/pages/records/record_page.dart';
 import 'package:fitmo_mobile/pages/reports/report_page.dart';
 import 'package:fitmo_mobile/pages/records/widgets/record_data_add.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/record/add': (context) => const RecordDataAdd(),
         '/report': (context) => const ReportPage(),
         '/activity': (context) => const ActivityPage(),
+        '/profile': (context) => const ProfilePage(),
       },
       initialRoute: '/loader',
     );
