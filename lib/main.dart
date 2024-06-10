@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitmo_mobile/firebase_options.dart';
-import 'package:fitmo_mobile/pages/profile/profile_page.dart';
-import 'package:fitmo_mobile/pages/records/record_page.dart';
-import 'package:fitmo_mobile/pages/reports/report_page.dart';
-import 'package:fitmo_mobile/pages/records/widgets/record_data_add.dart';
+import 'package:fitmo_mobile/pages/profile_page/profile_page.dart';
+import 'package:fitmo_mobile/pages/records_page/record_page.dart';
+import 'package:fitmo_mobile/pages/reports_page/report_page.dart';
+import 'package:fitmo_mobile/pages/records_page/widgets/record_data_add.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:fitmo_mobile/pages/activity/activity_page.dart';
-import 'package:fitmo_mobile/pages/home/home_page.dart';
+import 'package:fitmo_mobile/pages/statistic_page/statistic_page.dart';
+import 'package:fitmo_mobile/pages/home_page/home_page.dart';
 import 'package:fitmo_mobile/splash_screen.dart';
 
 void main() async {
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         '/record': (context) => const RecordPage(),
         '/record/add': (context) => const RecordDataAdd(),
         '/report': (context) => const ReportPage(),
-        '/activity': (context) => const ActivityPage(),
+        '/statistic': (context) => const StatisticPage(),
         '/profile': (context) => const ProfilePage(),
       },
       initialRoute: '/loader',

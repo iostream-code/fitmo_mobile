@@ -1,5 +1,5 @@
-import 'package:fitmo_mobile/pages/reports/controller/fitness_report_controller.dart';
-import 'package:fitmo_mobile/pages/reports/widgets/blood_oxygen_card.dart';
+import 'package:fitmo_mobile/pages/reports_page/controller/fitness_report_controller.dart';
+import 'package:fitmo_mobile/pages/reports_page/widgets/blood_oxygen_card.dart';
 import 'package:flutter/material.dart';
 
 class BloodOxygenReportApi extends StatefulWidget {

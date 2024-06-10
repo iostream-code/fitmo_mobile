@@ -1,5 +1,5 @@
-import 'package:fitmo_mobile/pages/reports/controller/fitness_report_controller.dart';
-import 'package:fitmo_mobile/pages/reports/widgets/foot_steps_card.dart';
+import 'package:fitmo_mobile/pages/reports_page/controller/fitness_report_controller.dart';
+import 'package:fitmo_mobile/pages/reports_page/widgets/foot_steps_card.dart';
 import 'package:flutter/material.dart';
 
 class FootStepsReportApi extends StatefulWidget {

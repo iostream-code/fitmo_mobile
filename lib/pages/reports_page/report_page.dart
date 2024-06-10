@@ -1,6 +1,6 @@
-import 'package:fitmo_mobile/pages/reports/widgets/foot_steps_report_api.dart';
-import 'package:fitmo_mobile/pages/reports/widgets/heart_rate_report_api.dart';
-import 'package:fitmo_mobile/pages/reports/widgets/report_header.dart';
+import 'package:fitmo_mobile/pages/reports_page/widgets/foot_steps_report_api.dart';
+import 'package:fitmo_mobile/pages/reports_page/widgets/heart_rate_report_api.dart';
+import 'package:fitmo_mobile/pages/reports_page/widgets/report_header.dart';
 import 'package:fitmo_mobile/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 

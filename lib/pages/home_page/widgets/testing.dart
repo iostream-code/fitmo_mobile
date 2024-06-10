@@ -1,4 +1,4 @@
-import 'package:fitmo_mobile/pages/home/home_controller.dart';
+import 'package:fitmo_mobile/pages/home_page/home_controller.dart';
 import 'package:flutter/material.dart';
 
 class Testing extends StatefulWidget {
