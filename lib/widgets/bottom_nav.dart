@@ -24,6 +24,14 @@ class BottomNav extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                Navigator.of(context).pushNamed('/activity');
+              },
+              child: const Icon(
+                Icons.directions_run_outlined,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
                 Navigator.of(context).pushNamed('/report');
               },
               child: const Icon(
