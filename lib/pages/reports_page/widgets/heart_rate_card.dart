@@ -14,7 +14,7 @@ class HeartRateCard extends StatelessWidget {
       child: Card(
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
@@ -29,20 +29,20 @@ class HeartRateCard extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
-                Align(
+                const Align(
                   alignment: Alignment.topRight,
                   child: Icon(
                     Icons.info_outline,
                     size: 18,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.monitor_heart_outlined,
                       size: 32,
                     ),
@@ -51,7 +51,7 @@ class HeartRateCard extends StatelessWidget {
                       children: [
                         Text(
                           heartRate.dataType,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
@@ -64,7 +64,7 @@ class HeartRateCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Align(

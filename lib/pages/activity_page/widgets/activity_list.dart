@@ -1,5 +1,4 @@
 import 'package:fitmo_mobile/models/activity_data.dart';
-import 'package:fitmo_mobile/models/fitness_data.dart';
 import 'package:fitmo_mobile/services/activity_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,8 +23,8 @@ class ActivityList extends StatelessWidget {
                 borderRadius: BorderRadius.circular(2.5),
                 color: Colors.blue,
               ),
-              margin: EdgeInsets.only(bottom: 4.0),
-              padding: EdgeInsets.only(left: 16.0, right: 6.0),
+              margin: const EdgeInsets.only(bottom: 4.0),
+              padding: const EdgeInsets.only(left: 16.0, right: 6.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -38,7 +37,7 @@ class ActivityList extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.add,
                       color: Colors.white,
                     ),
@@ -88,7 +87,7 @@ class ActivityList extends StatelessWidget {
                           ),
                           title: Text(
                             data.activity_name.toUpperCase(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),
@@ -97,7 +96,7 @@ class ActivityList extends StatelessWidget {
                             DateFormat('dd-MM-yyyy h a').format(
                               data.timestamp.toDate(),
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 10,
                             ),
                           ),
@@ -110,7 +109,7 @@ class ActivityList extends StatelessWidget {
                                     : Colors.green,
                             child: Text(
                               data.status.toUpperCase(),
-                              style: TextStyle(fontSize: 18.0),
+                              style: const TextStyle(fontSize: 18.0),
                             ),
                           ),
                         ),

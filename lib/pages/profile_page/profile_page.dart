@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fitmo_mobile/widgets/bottom_nav.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});

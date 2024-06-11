@@ -6,7 +6,7 @@ class ActivityStatusBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -28,9 +28,9 @@ class ActivityStatusBanner extends StatelessWidget {
                   blurRadius: 10.0,
                   spreadRadius: .5,
                 ),
-                BoxShadow(
+                const BoxShadow(
                   color: Colors.white,
-                  offset: const Offset(0.0, 0.0),
+                  offset: Offset(0.0, 0.0),
                   blurRadius: 0.0,
                   spreadRadius: 0.0,
                 ), //BoxShadow
@@ -38,7 +38,7 @@ class ActivityStatusBanner extends StatelessWidget {
             ),
             child: Image.asset('assets/emoticon/smile.png'),
           ),
-          Expanded(
+          const Expanded(
             child: Padding(
               padding: EdgeInsets.all(12.0),
               child: Column(
