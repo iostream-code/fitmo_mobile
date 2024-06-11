@@ -15,7 +15,8 @@ class _ActivityHeaderState extends State<ActivityHeader> {
       elevation: 0,
       leading: IconButton(
         onPressed: () {
-          Navigator.of(context).pushNamed("/");
+          // Navigator.of(context).pushNamed("/");
+          Navigator.of(context).pop();
         },
         icon: const Icon(
           Icons.arrow_back_ios,
@@ -32,25 +33,6 @@ class _ActivityHeaderState extends State<ActivityHeader> {
         ),
       ),
       centerTitle: true,
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed("/record/add");
-          },
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.all(5),
-            maximumSize: const Size(30, 30),
-            minimumSize: const Size(15, 15),
-            shape: const CircleBorder(),
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.blue[800],
-          ),
-          child: const Icon(
-            Icons.add,
-            size: 14,
-          ),
-        ),
-      ],
     );
   }
 }
