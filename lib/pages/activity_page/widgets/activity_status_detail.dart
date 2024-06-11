@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class ActivityStatusDetail extends StatelessWidget {
   const ActivityStatusDetail({super.key});
@@ -15,7 +15,7 @@ class ActivityStatusDetail extends StatelessWidget {
           children: [
             Text(
               "Detail Activity",
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
             const SizedBox(
               height: 12.0,
@@ -40,31 +40,19 @@ class ActivityStatusDetail extends StatelessWidget {
                         DetailCard(
                           value: 128,
                           time: Timestamp.now(),
-                          label: "Max Heart Rate",
+                          label: "Resting Heart Rate",
                           image: "assets/emoticon/smile.png",
                         ),
                         DetailCard(
                           value: 128,
                           time: Timestamp.now(),
-                          label: "Max Heart Rate",
+                          label: "Average Heart Rate",
                           image: "assets/emoticon/smile.png",
                         ),
                         DetailCard(
                           value: 128,
                           time: Timestamp.now(),
-                          label: "Max Heart Rate",
-                          image: "assets/emoticon/smile.png",
-                        ),
-                        DetailCard(
-                          value: 128,
-                          time: Timestamp.now(),
-                          label: "Max Heart Rate",
-                          image: "assets/emoticon/smile.png",
-                        ),
-                        DetailCard(
-                          value: 128,
-                          time: Timestamp.now(),
-                          label: "Max Heart Rate",
+                          label: "VO2Max",
                           image: "assets/emoticon/smile.png",
                         ),
                       ],
@@ -94,6 +82,7 @@ class DetailCard extends StatelessWidget {
     required this.image,
   }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: 110,
@@ -120,7 +109,7 @@ class DetailCard extends StatelessWidget {
             iconColor: Colors.red.shade100,
             iconBackground: Colors.red,
           ),
-          // Change(time: time),
+          Change(time: time),
           Align(
             alignment: Alignment.bottomLeft,
             child: Column(
@@ -129,12 +118,12 @@ class DetailCard extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(fontSize: 10),
+                  style: const TextStyle(fontSize: 14),
                 ),
                 Text(
                   value.toString(),
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 24,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -153,7 +142,7 @@ class Change extends StatelessWidget {
     required this.time,
   }) : super(key: key);
 
-  final String time;
+  final Timestamp time;
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +158,7 @@ class Change extends StatelessWidget {
           borderRadius: BorderRadius.circular(500),
         ),
         child: Text(
-          time,
+          DateFormat('kk: mm').format(time.toDate()),
           style: const TextStyle(fontSize: 10, color: Colors.white),
         ),
       ),
@@ -197,7 +186,7 @@ class StatIcon extends StatelessWidget {
         color: iconBackground,
         borderRadius: BorderRadius.circular(9),
       ),
-      child: Icon(icon, size: 15, color: iconColor),
+      child: Icon(icon, size: 48, color: iconColor),
     );
   }
 }

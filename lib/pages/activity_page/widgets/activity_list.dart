@@ -36,7 +36,9 @@ class ActivityList extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/activity/add');
+                    },
                     icon: const Icon(
                       Icons.add,
                       color: Colors.white,
