@@ -102,18 +102,11 @@ class ActivityList extends StatelessWidget {
                               fontSize: 10,
                             ),
                           ),
-                          trailing: Badge(
-                            smallSize: 10,
-                            backgroundColor: actStatus == 'bad'
-                                ? Colors.red
-                                : actStatus == 'fair'
-                                    ? Colors.yellow
-                                    : Colors.green,
-                            child: Text(
-                              data.status.toUpperCase(),
-                              style: const TextStyle(fontSize: 18.0),
-                            ),
-                          ),
+                          trailing: data.status == 'bad'
+                              ? Image.asset('assets/emoticon/unhappy.png')
+                              : data.status == 'fair'
+                                  ? Image.asset('assets/emoticon/mood.png')
+                                  : Image.asset('assets/emoticon/smile.png'),
                         ),
                       );
                     },

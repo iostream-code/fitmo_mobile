@@ -1,12 +1,16 @@
-import 'dart:math';
-
+import 'package:fitmo_mobile/models/activity_data.dart';
+import 'package:fitmo_mobile/services/activity_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:string_extensions/string_extensions.dart';
 
 class RecentActivities extends StatelessWidget {
   const RecentActivities({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ActivityDatabase database = ActivityDatabase();
+
     return Expanded(
         child: Padding(
       padding: const EdgeInsets.symmetric(
@@ -22,103 +26,115 @@ class RecentActivities extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: 8,
-              itemBuilder: (context, index) => const ActivityItem(),
+            child: StreamBuilder(
+              stream: database.getActivityData(),
+              builder: (context, snapshots) {
+                List activityData = snapshots.data?.docs ?? [];
+
+                if (activityData.isEmpty) {
+                  return const Center(
+                    child: Text("Nothing here..."),
+                  );
+                }
+
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: activityData.length,
+                  itemBuilder: (context, index) {
+                    ActivityData data = activityData[index].data();
+                    String dataId = activityData[index].id;
+
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/activity/details');
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color(0xffe1e1e1),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 10),
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xffcff2ff),
+                              ),
+                              height: 35,
+                              width: 35,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/icon/running_icon.png'),
+                                      fit: BoxFit.fill,
+                                    )),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Text(
+                              data.activity_name.capitalize,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            const Expanded(
+                              child: SizedBox(),
+                            ),
+                            const Icon(
+                              Icons.date_range,
+                              size: 12,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              DateFormat('EEE, d').format(
+                                data.timestamp.toDate(),
+                              ),
+                              style: const TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w300),
+                            ),
+                            const SizedBox(width: 10),
+                            Badge(
+                              backgroundColor: data.status == 'bad'
+                                  ? Colors.red
+                                  : data.status == 'fair'
+                                      ? Colors.yellow.shade700
+                                      : Colors.green,
+                              child: const Icon(
+                                Icons.monitor_heart_outlined,
+                                size: 12,
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              data.status.capitalize,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
-          )
+          ),
         ],
       ),
     ));
-  }
-}
-
-class ActivityItem extends StatelessWidget {
-  const ActivityItem({Key? key}) : super(key: key);
-
-  static const activities = [
-    'Running',
-    'Swimming',
-    'Cycling',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    String activity = activities[Random().nextInt(activities.length)];
-
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed('/details');
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        height: 50,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: const Color(0xffe1e1e1),
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          children: [
-            const SizedBox(width: 10),
-            Container(
-              padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xffcff2ff),
-              ),
-              height: 35,
-              width: 35,
-              child: Container(
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: AssetImage('assets/sports.jpeg'),
-                      fit: BoxFit.fill,
-                    )),
-              ),
-            ),
-            const SizedBox(width: 20),
-            Text(
-              activity,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            const Expanded(
-              child: SizedBox(),
-            ),
-            const Icon(
-              Icons.timer,
-              size: 12,
-            ),
-            const SizedBox(width: 5),
-            const Text(
-              '30min',
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300),
-            ),
-            const SizedBox(width: 10),
-            const Icon(
-              Icons.local_fire_department,
-              size: 12,
-            ),
-            const SizedBox(width: 5),
-            const Text(
-              '55kcal',
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            const SizedBox(
-              width: 20,
-            )
-          ],
-        ),
-      ),
-    );
   }
 }
