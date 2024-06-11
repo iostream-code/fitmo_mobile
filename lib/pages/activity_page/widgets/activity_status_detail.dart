@@ -25,7 +25,7 @@ class ActivityStatusDetail extends StatelessWidget {
                 primary: false,
                 slivers: [
                   SliverPadding(
-                    padding: EdgeInsets.symmetric(vertical: 4.0),
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
                     sliver: SliverGrid.count(
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,

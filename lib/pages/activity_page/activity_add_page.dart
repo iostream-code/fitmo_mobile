@@ -30,7 +30,7 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
     return Scaffold(
       body: Column(
         children: [
-          ActivityHeader(),
+          const ActivityHeader(),
           formField(),
         ],
       ),
@@ -124,9 +124,9 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
                                 value: value, label: value);
                           }).toList(),
                         ),
-                        TextField(
+                        const TextField(
                           // controller: _valueController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             labelText: "Resting Heart Rate",
                             labelStyle: TextStyle(
                               color: Colors.black,
@@ -137,9 +137,9 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
                           ),
                           keyboardType: TextInputType.number,
                         ),
-                        TextField(
+                        const TextField(
                           // controller: _valueController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             labelText: "Maximum Heart Rate",
                             labelStyle: TextStyle(
                               color: Colors.black,
@@ -150,9 +150,9 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
                           ),
                           keyboardType: TextInputType.number,
                         ),
-                        TextField(
+                        const TextField(
                           // controller: _valueController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             labelText: "Average Heart Rate",
                             labelStyle: TextStyle(
                               color: Colors.black,
