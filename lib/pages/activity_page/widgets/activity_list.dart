@@ -2,6 +2,7 @@ import 'package:fitmo_mobile/models/activity_data.dart';
 import 'package:fitmo_mobile/services/activity_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:string_extensions/string_extensions.dart';
 
 class ActivityList extends StatelessWidget {
   const ActivityList({super.key});
@@ -64,8 +65,6 @@ class ActivityList extends StatelessWidget {
                     itemCount: activityData.length,
                     itemBuilder: (context, index) {
                       ActivityData data = activityData[index].data();
-                      String dataId = activityData[index].id;
-                      String actStatus = data.status;
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
@@ -88,7 +87,7 @@ class ActivityList extends StatelessWidget {
                             ),
                           ),
                           title: Text(
-                            data.activity_name.toUpperCase(),
+                            data.activity_name.capitalize,
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
