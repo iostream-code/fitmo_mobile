@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:fitmo_mobile/pages/reports_page/controller/fitness_report_controller.dart';
-import 'package:fitmo_mobile/pages/reports_page/widgets/heart_rate_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -131,7 +128,7 @@ class _ReportListState extends State<ReportList> {
                                 ),
                                 const SizedBox(width: 5),
                                 Text(
-                                  DateFormat('EEE, d').format(
+                                  DateFormat('h:m a').format(
                                     data.dateFrom,
                                   ),
                                   style: const TextStyle(
@@ -165,28 +162,7 @@ class _ReportListState extends State<ReportList> {
                   );
                 },
               ),
-            )
-            // Expanded(
-            //   child: ValueListenableBuilder(
-            //     valueListenable: controller.heartRate,
-            //     builder: (context, value, child) {
-            //       return GridView(
-            //         padding: const EdgeInsets.all(15),
-            //         gridDelegate:
-            //             const SliverGridDelegateWithFixedCrossAxisCount(
-            //           crossAxisCount: 2,
-            //           childAspectRatio: 1,
-            //           mainAxisSpacing: 15,
-            //           crossAxisSpacing: 15,
-            //         ),
-            //         children: [
-            //           for (final heartRate in value)
-            //             HeartRateCard(heartRate: heartRate)
-            //         ],
-            //       );
-            //     },
-            //   ),
-            // ),
+            ),
           ],
         ),
       ),
