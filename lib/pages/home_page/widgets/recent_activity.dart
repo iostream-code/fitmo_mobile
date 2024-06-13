@@ -42,7 +42,6 @@ class RecentActivities extends StatelessWidget {
                   itemCount: activityData.length,
                   itemBuilder: (context, index) {
                     ActivityData data = activityData[index].data();
-                    String dataId = activityData[index].id;
 
                     return GestureDetector(
                       onTap: () {

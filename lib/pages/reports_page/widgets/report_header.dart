@@ -1,3 +1,4 @@
+import 'package:fitmo_mobile/pages/reports_page/controller/fitness_report_controller.dart';
 import 'package:flutter/material.dart';
 
 class ReportHeader extends StatefulWidget {
@@ -8,6 +9,8 @@ class ReportHeader extends StatefulWidget {
 }
 
 class _ReportHeaderState extends State<ReportHeader> {
+  final controller = FitnessReportController();
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -24,32 +27,25 @@ class _ReportHeaderState extends State<ReportHeader> {
         ),
       ),
       title: const Text(
-        "Google Fit API",
+        "Measurement",
         style: TextStyle(
           color: Colors.white,
           fontSize: 18,
         ),
       ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            controller.getHeartRateData();
+          },
+          icon: Icon(
+            Icons.download,
+            size: 24,
+            color: Colors.white,
+          ),
+        ),
+      ],
       centerTitle: true,
-      // actions: [
-      //   TextButton(
-      //     onPressed: () {
-      //       Navigator.of(context).pushNamed("/report/add");
-      //     },
-      //     style: ElevatedButton.styleFrom(
-      //       padding: const EdgeInsets.all(5),
-      //       maximumSize: const Size(30, 30),
-      //       minimumSize: const Size(30, 30),
-      //       shape: const CircleBorder(),
-      //       backgroundColor: Colors.white,
-      //       foregroundColor: Colors.blue[800],
-      //     ),
-      //     child: const Icon(
-      //       Icons.add,
-      //       size: 18,
-      //     ),
-      //   ),
-      // ],
     );
   }
 }

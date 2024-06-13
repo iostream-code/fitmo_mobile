@@ -45,7 +45,6 @@ class _HeartRateReportApiState extends State<HeartRateReportApi> {
               height: 10,
             ),
             Expanded(
-              // child: fitnessCard(),
               child: ValueListenableBuilder(
                 valueListenable: controller.heartRate,
                 builder: (context, value, child) {

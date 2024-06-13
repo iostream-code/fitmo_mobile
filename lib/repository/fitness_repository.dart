@@ -22,7 +22,7 @@ class FitnessRepository {
 
       return fitnessData.map((e) {
         var b = e;
-        // print(b.value.toJson()['numericValue']);
+        print(b.value.toJson()['numericValue']);
         return HeartRate(
           double.parse(b.value.toJson()['numericValue']),
           b.unitString,
