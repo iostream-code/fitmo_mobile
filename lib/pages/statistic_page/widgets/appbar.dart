@@ -24,7 +24,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       title: const Text(
-        'Activity',
+        'Statistic',
         style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,

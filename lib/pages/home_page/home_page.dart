@@ -1,6 +1,6 @@
 import 'package:fitmo_mobile/pages/home_page/home_controller.dart';
-import 'package:fitmo_mobile/pages/home_page/widgets/activity.dart';
-import 'package:fitmo_mobile/pages/home_page/widgets/programs.dart';
+import 'package:fitmo_mobile/pages/home_page/widgets/recent_activity.dart';
+import 'package:fitmo_mobile/pages/home_page/widgets/current_programs.dart';
 import 'package:fitmo_mobile/pages/home_page/widgets/header.dart';
 import 'package:fitmo_mobile/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = HomeController();
+  // final controller = HomeController();
 
   @override
   Widget build(BuildContext context) {
