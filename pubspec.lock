@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.1"
+  carp_serializable:
+    dependency: "direct main"
+    description:
+      name: carp_serializable
+      sha256: bd72f3e7521cfac78c2b34762d9240bded1bebe0c6e615703a516705a3a983a0
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   characters:
     dependency: transitive
     description:

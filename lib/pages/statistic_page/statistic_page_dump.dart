@@ -27,6 +27,8 @@ enum AppState {
   FETCHING_DATA,
   DATA_READY,
   NO_DATA,
+  AUTHORIZED,
+  AUTH_NOT_GRANTED,
 }
 
 class _StatisticPageState extends State<StatisticPage> {
@@ -53,9 +55,8 @@ class _StatisticPageState extends State<StatisticPage> {
 
   @override
   void initState() {
+    // health.configure(useHealthConnectIfAvailable: true);
     health.useHealthConnectIfAvailable == true;
-    authorize();
-    // fetchData();
     super.initState();
   }
 
@@ -76,7 +77,7 @@ class _StatisticPageState extends State<StatisticPage> {
       }
     }
     setState(() => _state =
-        (authorized) ? AppState.FETCHING_DATA : AppState.DATA_NOT_FETCHED);
+        (authorized) ? AppState.AUTHORIZED : AppState.AUTH_NOT_GRANTED);
   }
 
   Future<void> fetchData() async {
@@ -107,6 +108,15 @@ class _StatisticPageState extends State<StatisticPage> {
     });
   }
 
+  // latest code
+  final controller = FitnessReportController();
+
+  // @override
+  // void initState() {
+  //   controller.getFootSteps();
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,85 +126,53 @@ class _StatisticPageState extends State<StatisticPage> {
       body: Column(
         children: [
           Dates(),
-          Expanded(
-            child: Center(
-              child: _content,
-            ),
+          ListView.builder(
+            itemCount: _healthDataList.length,
+            itemBuilder: (_, index) {
+              HealthDataPoint p = _healthDataList[index];
+              if (p.value is AudiogramHealthValue) {
+                return ListTile(
+                  title: Text("${p.typeString}: ${p.value}"),
+                  trailing: Text(p.unitString),
+                  subtitle: Text('${p.dateFrom} - ${p.dateTo}'),
+                );
+              }
+              if (p.value is WorkoutHealthValue) {
+                return ListTile(
+                  title: Text(
+                      "${p.typeString}: ${(p.value as WorkoutHealthValue).totalEnergyBurned} ${(p.value as WorkoutHealthValue).totalEnergyBurnedUnit?.name}"),
+                  trailing: Text(
+                      (p.value as WorkoutHealthValue).workoutActivityType.name),
+                  subtitle: Text('${p.dateFrom} - ${p.dateTo}'),
+                );
+              }
+              if (p.value is NutritionHealthValue) {
+                return ListTile(
+                  title: Text(
+                      "${p.typeString} ${(p.value as NutritionHealthValue).mealType}: ${(p.value as NutritionHealthValue).name}"),
+                  trailing: Text(
+                      '${(p.value as NutritionHealthValue).calories} kcal'),
+                  subtitle: Text('${p.dateFrom} - ${p.dateTo}'),
+                );
+              }
+              return ListTile(
+                title: Text("${p.typeString}: ${p.value}"),
+                trailing: Text(p.unitString),
+                subtitle: Text('${p.dateFrom} - ${p.dateTo}'),
+              );
+              return Column(
+                children: [
+                  Steps(),
+                  Graph(),
+                  Info(),
+                  Stats(),
+                  BottomNav(),
+                ],
+              );
+            },
           ),
-          BottomNav(),
         ],
       ),
     );
   }
-
-  Widget get _contentFetchingData => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-              padding: const EdgeInsets.all(20),
-              child: const CircularProgressIndicator(
-                strokeWidth: 10,
-                color: Colors.blue,
-              )),
-          const Text('Memuat Data...')
-        ],
-      );
-
-  Widget get _contentDataReady => ListView.builder(
-      itemCount: _healthDataList.length,
-      itemBuilder: (_, index) {
-        HealthDataPoint p = _healthDataList[index];
-        print("this is content ready widget!");
-        if (p.value is AudiogramHealthValue) {
-          return ListTile(
-            title: Text("${p.typeString}: ${p.value}"),
-            trailing: Text(p.unitString),
-            subtitle: Text('${p.dateFrom} - ${p.dateTo}'),
-          );
-        }
-        if (p.value is WorkoutHealthValue) {
-          return ListTile(
-            title: Text(
-                "${p.typeString}: ${(p.value as WorkoutHealthValue).totalEnergyBurned} ${(p.value as WorkoutHealthValue).totalEnergyBurnedUnit?.name}"),
-            trailing:
-                Text((p.value as WorkoutHealthValue).workoutActivityType.name),
-            subtitle: Text('${p.dateFrom} - ${p.dateTo}'),
-          );
-        }
-        if (p.value is NutritionHealthValue) {
-          return ListTile(
-            title: Text(
-                "${p.typeString} ${(p.value as NutritionHealthValue).mealType}: ${(p.value as NutritionHealthValue).name}"),
-            trailing:
-                Text('${(p.value as NutritionHealthValue).calories} kcal'),
-            subtitle: Text('${p.dateFrom} - ${p.dateTo}'),
-          );
-        }
-        return ListTile(
-          title: Text("${p.typeString}: ${p.value}"),
-          trailing: Text(p.unitString),
-          subtitle: Text('${p.dateFrom} - ${p.dateTo}'),
-        );
-      });
-
-  final Widget _contentNoData = const Text('No Data to show');
-
-  final Widget _contentNotFetched = const Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Steps(),
-      Graph(),
-      Info(),
-      Stats(),
-    ],
-  );
-
-  // final Widget _authorized = setState(() => _state = AppState.FETCHING_DATA);
-
-  Widget get _content => switch (_state) {
-        AppState.DATA_READY => _contentDataReady,
-        AppState.DATA_NOT_FETCHED => _contentNotFetched,
-        AppState.FETCHING_DATA => _contentFetchingData,
-        AppState.NO_DATA => _contentNoData,
-      };
 }

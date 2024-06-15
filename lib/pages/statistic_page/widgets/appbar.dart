@@ -44,7 +44,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             foregroundColor: const Color(0xfffa7a3b),
           ),
           child: const Icon(
-            Icons.notifications,
+            Icons.notifications_active,
             size: 16,
           ),
         )

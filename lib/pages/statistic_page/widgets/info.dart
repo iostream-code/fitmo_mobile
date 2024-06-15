@@ -5,21 +5,21 @@ class Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         StatsInfo(
-          value: '345',
-          unit: 'kcal',
+          value: "-",
+          unit: 'Kkal',
           label: 'Calories',
         ),
         StatsInfo(
-          value: '3.6',
-          unit: 'km',
+          value: '-',
+          unit: 'Km',
           label: 'Distance',
         ),
         StatsInfo(
-          value: '1.5',
+          value: '-',
           unit: 'hr',
           label: 'Hours',
         ),

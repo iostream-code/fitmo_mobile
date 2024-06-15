@@ -59,53 +59,8 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextField(
-                          controller: _valueController,
-                          decoration: const InputDecoration(
-                            labelText: "Value",
-                            labelStyle: TextStyle(
-                              color: Colors.black,
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
                         const SizedBox(
-                          height: 20,
-                        ),
-                        DropdownMenu(
-                          // width: fixedScreen.width,
-                          width: 296,
-                          controller: _fitnessTypeController,
-                          label: const Text("Fitness Type"),
-                          initialSelection: fitnessType.first,
-                          onSelected: (String? value) {
-                            setState(() {
-                              dropdownValue = value!;
-                            });
-                          },
-                          dropdownMenuEntries: fitnessType
-                              .map<DropdownMenuEntry<String>>((String value) {
-                            return DropdownMenuEntry<String>(
-                                value: value, label: value);
-                          }).toList(),
-                        ),
-                        TextField(
-                          controller: _unitController,
-                          decoration: const InputDecoration(
-                            labelText: "Unit",
-                            labelStyle: TextStyle(
-                              color: Colors.black,
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
+                          height: 20.0,
                         ),
                         DropdownMenu(
                           // width: fixedScreen.width,

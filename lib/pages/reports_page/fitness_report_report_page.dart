@@ -1,12 +1,4 @@
-import 'package:fitmo_mobile/models/calories_burned.dart';
-import 'package:fitmo_mobile/pages/reports_page/controller/fitness_report_controller.dart';
-import 'package:fitmo_mobile/pages/statistic_page/widgets/appbar.dart';
-import 'package:fitmo_mobile/pages/statistic_page/widgets/stats.dart';
-import 'package:fitmo_mobile/pages/statistic_page/widgets/dates.dart';
-import 'package:fitmo_mobile/pages/statistic_page/widgets/graph.dart';
-import 'package:fitmo_mobile/pages/statistic_page/widgets/info.dart';
-import 'package:fitmo_mobile/pages/statistic_page/widgets/steps.dart';
-import 'package:fitmo_mobile/widgets/bottom_nav.dart';
+// ignore_for_file: constant_identifier_names
 
 import 'dart:async';
 
@@ -15,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class StatisticPage extends StatefulWidget {
-  const StatisticPage({Key? key}) : super(key: key);
+class FitnessRepo extends StatefulWidget {
+  const FitnessRepo({super.key});
 
   @override
-  State<StatisticPage> createState() => _StatisticPageState();
+  State<FitnessRepo> createState() => _FitnessRepoState();
 }
 
 enum AppState {
@@ -27,9 +19,11 @@ enum AppState {
   FETCHING_DATA,
   DATA_READY,
   NO_DATA,
+  AUTHORIZED,
+  AUTH_NOT_GRANTED,
 }
 
-class _StatisticPageState extends State<StatisticPage> {
+class _FitnessRepoState extends State<FitnessRepo> {
   final List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var health = HealthFactory();
@@ -53,9 +47,8 @@ class _StatisticPageState extends State<StatisticPage> {
 
   @override
   void initState() {
+    // health.configure(useHealthConnectIfAvailable: true);
     health.useHealthConnectIfAvailable == true;
-    authorize();
-    // fetchData();
     super.initState();
   }
 
@@ -76,7 +69,7 @@ class _StatisticPageState extends State<StatisticPage> {
       }
     }
     setState(() => _state =
-        (authorized) ? AppState.FETCHING_DATA : AppState.DATA_NOT_FETCHED);
+        (authorized) ? AppState.AUTHORIZED : AppState.AUTH_NOT_GRANTED);
   }
 
   Future<void> fetchData() async {
@@ -109,20 +102,34 @@ class _StatisticPageState extends State<StatisticPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(
-        appBar: AppBar(),
-      ),
-      body: Column(
-        children: [
-          Dates(),
-          Expanded(
-            child: Center(
-              child: _content,
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Health Example'),
+        ),
+        body: Column(
+          children: [
+            Wrap(
+              spacing: 10,
+              children: [
+                TextButton(
+                    onPressed: authorize,
+                    style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Colors.blue)),
+                    child: const Text("Authenticate",
+                        style: TextStyle(color: Colors.white))),
+                TextButton(
+                    onPressed: fetchData,
+                    style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Colors.blue)),
+                    child: const Text("Fetch Data",
+                        style: TextStyle(color: Colors.white))),
+              ],
             ),
-          ),
-          BottomNav(),
-        ],
+            const Divider(thickness: 3),
+            Expanded(child: Center(child: _content))
+          ],
+        ),
       ),
     );
   }
@@ -134,9 +141,8 @@ class _StatisticPageState extends State<StatisticPage> {
               padding: const EdgeInsets.all(20),
               child: const CircularProgressIndicator(
                 strokeWidth: 10,
-                color: Colors.blue,
               )),
-          const Text('Memuat Data...')
+          const Text('Fetching data...')
         ],
       );
 
@@ -144,7 +150,6 @@ class _StatisticPageState extends State<StatisticPage> {
       itemCount: _healthDataList.length,
       itemBuilder: (_, index) {
         HealthDataPoint p = _healthDataList[index];
-        print("this is content ready widget!");
         if (p.value is AudiogramHealthValue) {
           return ListTile(
             title: Text("${p.typeString}: ${p.value}"),
@@ -179,22 +184,30 @@ class _StatisticPageState extends State<StatisticPage> {
 
   final Widget _contentNoData = const Text('No Data to show');
 
-  final Widget _contentNotFetched = const Column(
+  final Widget _contentNotFetched =
+      const Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+    Text("Press 'Auth' to get permissions to access health data."),
+    Text("Press 'Fetch Data' to get health data."),
+    Text("Press 'Add Data' to add some random health data."),
+    Text("Press 'Delete Data' to remove some random health data."),
+  ]);
+
+  final Widget _authorized = const Text('Authorization granted!');
+
+  final Widget _authorizationNotGranted = const Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Steps(),
-      Graph(),
-      Info(),
-      Stats(),
+      Text('Authorization not given.'),
+      Text('You need to give all health permissions on Health Connect'),
     ],
   );
-
-  // final Widget _authorized = setState(() => _state = AppState.FETCHING_DATA);
 
   Widget get _content => switch (_state) {
         AppState.DATA_READY => _contentDataReady,
         AppState.DATA_NOT_FETCHED => _contentNotFetched,
         AppState.FETCHING_DATA => _contentFetchingData,
         AppState.NO_DATA => _contentNoData,
+        AppState.AUTHORIZED => _authorized,
+        AppState.AUTH_NOT_GRANTED => _authorizationNotGranted,
       };
 }

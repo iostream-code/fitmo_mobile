@@ -1,5 +1,5 @@
-import 'package:fitmo_mobile/models/blood_glucose.dart';
 import 'package:fitmo_mobile/models/blood_oxygen.dart';
+import 'package:fitmo_mobile/models/calories_burned.dart';
 import 'package:fitmo_mobile/models/foot_steps.dart';
 import 'package:fitmo_mobile/models/heart_rate.dart';
 import 'package:fitmo_mobile/repository/fitness_repository.dart';
@@ -10,8 +10,8 @@ class FitnessReportController {
 
   final heartRate = ValueNotifier(<HeartRate>[]);
   final bloodOxygen = ValueNotifier(<BloodOxygen>[]);
-  final bloodGlucose = ValueNotifier(<BloodGlucose>[]);
   final footSteps = ValueNotifier(<FootSteps>[]);
+  final caloriesBurned = ValueNotifier(<CaloriesBurned>[]);
 
   Future<void> getHeartRateData() async {
     heartRate.value = await repository.getHeartRate();
@@ -24,4 +24,8 @@ class FitnessReportController {
   Future<void> getFootSteps() async {
     footSteps.value = await repository.getFootSteps();
   }
+
+  // Future<void> getCaloriesBurned() async {
+  //   caloriesBurned.value = await repository.getCaloriesBurned();
+  // }
 }

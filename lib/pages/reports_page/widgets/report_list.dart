@@ -13,6 +13,12 @@ class _ReportListState extends State<ReportList> {
   final controller = FitnessReportController();
 
   @override
+  void initState() {
+    controller.getHeartRateData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
@@ -43,12 +49,13 @@ class _ReportListState extends State<ReportList> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        controller.getHeartRateData();
+                        // controller.getHeartRateData();
                       },
                       child: Text(
-                        "Load Data",
+                        "Sync Data",
                         selectionColor: Colors.black,
                         style: TextStyle(
+                          fontSize: 10,
                           color: Colors.black,
                         ),
                       ),

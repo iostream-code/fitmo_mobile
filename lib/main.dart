@@ -5,6 +5,7 @@ import 'package:fitmo_mobile/pages/activity_page/activity_detail_page.dart';
 import 'package:fitmo_mobile/pages/activity_page/activity_page.dart';
 import 'package:fitmo_mobile/pages/profile_page/profile_page.dart';
 import 'package:fitmo_mobile/pages/records_page/record_page.dart';
+import 'package:fitmo_mobile/pages/reports_page/fitness_report_report_page.dart';
 import 'package:fitmo_mobile/pages/reports_page/report_page.dart';
 import 'package:fitmo_mobile/pages/records_page/widgets/record_data_add.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         '/record': (context) => const RecordPage(),
         '/record/add': (context) => const RecordDataAdd(),
         '/report': (context) => const ReportPage(),
+        '/fitness-report': (context) => const FitnessRepo(),
         '/statistic': (context) => const StatisticPage(),
         '/profile': (context) => const ProfilePage(),
       },

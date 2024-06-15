@@ -1,20 +1,35 @@
-import 'package:fitmo_mobile/helpers.dart';
+import 'package:fitmo_mobile/pages/reports_page/controller/fitness_report_controller.dart';
 import 'package:flutter/material.dart';
 
-class Steps extends StatelessWidget {
+class Steps extends StatefulWidget {
   const Steps({Key? key}) : super(key: key);
 
   @override
+  State<Steps> createState() => _StepsState();
+}
+
+class _StepsState extends State<Steps> {
+  // final controller = FitnessReportController();
+
+  // @override
+  // void initState() {
+  //   controller.getFootSteps();
+  //   super.initState();
+  // }
+
+  @override
   Widget build(BuildContext context) {
-    String steps = formatNumber(randBetween(3000, 6000));
+    double totalSteps = 0;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
           Text(
-            steps,
-            style: const TextStyle(
-              fontSize: 33,
+            "No Data Available",
+            // "Data",
+            style: TextStyle(
+              fontSize: totalSteps == 0 ? 14 : 32,
               fontWeight: FontWeight.w900,
             ),
           ),
@@ -28,6 +43,36 @@ class Steps extends StatelessWidget {
           ),
         ],
       ),
+
+      // child: ValueListenableBuilder(
+      //   valueListenable: controller.footSteps,
+      //   builder: (context, value, child) {
+      //     for (final data in value) {
+      //       (totalSteps += data.value);
+      //     }
+
+      //     return Column(
+      //       children: [
+      //         Text(
+      //           "${totalSteps.toStringAsFixed(0)}",
+      //           // "Data",
+      //           style: const TextStyle(
+      //             fontSize: 33,
+      //             fontWeight: FontWeight.w900,
+      //           ),
+      //         ),
+      //         const Text(
+      //           'Total Steps',
+      //           style: TextStyle(
+      //             fontSize: 11,
+      //             fontWeight: FontWeight.w500,
+      //             height: 2,
+      //           ),
+      //         ),
+      //       ],
+      //     );
+      //   },
+      // ),
     );
   }
 }

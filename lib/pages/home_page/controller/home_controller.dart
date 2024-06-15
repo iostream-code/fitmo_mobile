@@ -16,7 +16,7 @@ class HomeController {
   final bloodGlucose = ValueNotifier(<BloodGlucose>[]);
 
   Future<void> getData() async {
-    repository.getBloodGlucose();
+    // repository.getBloodGlucose();
     // repository.getHeartRate();
     // heartRate.value = await repository.getHeartRate();
     // bloodOxygen.value = await repository.getBloodOxygen();

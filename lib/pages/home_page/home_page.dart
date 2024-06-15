@@ -1,4 +1,4 @@
-import 'package:fitmo_mobile/pages/home_page/home_controller.dart';
+import 'package:fitmo_mobile/pages/home_page/controller/home_controller.dart';
 import 'package:fitmo_mobile/pages/home_page/widgets/recent_activity.dart';
 import 'package:fitmo_mobile/pages/home_page/widgets/current_programs.dart';
 import 'package:fitmo_mobile/pages/home_page/widgets/header.dart';
