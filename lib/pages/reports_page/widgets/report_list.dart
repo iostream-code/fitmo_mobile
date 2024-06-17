@@ -49,7 +49,7 @@ class _ReportListState extends State<ReportList> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // controller.getHeartRateData();
+                        controller.getHeartRateData();
                       },
                       child: Text(
                         "Sync Data",

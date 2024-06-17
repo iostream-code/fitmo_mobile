@@ -1,23 +1,26 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:health/health.dart';
 
 class Graph extends StatelessWidget {
-  const Graph({Key? key}) : super(key: key);
+  final List<HealthDataPoint> fitnessData;
+  const Graph({Key? key, required this.fitnessData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
+    return Expanded(
       child: SizedBox(
         width: double.infinity,
-        child: GraphArea(),
+        child: GraphArea(dataDump: fitnessData),
       ),
     );
   }
 }
 
 class GraphArea extends StatefulWidget {
-  const GraphArea({Key? key}) : super(key: key);
+  final List<HealthDataPoint> dataDump;
+  const GraphArea({Key? key, required this.dataDump}) : super(key: key);
 
   @override
   _GraphAreaState createState() => _GraphAreaState();
@@ -74,13 +77,15 @@ class GraphPainter extends CustomPainter {
       : _size = Tween<double>(begin: 0, end: 1).animate(
           CurvedAnimation(
             parent: animation,
-            curve: const Interval(0.0, 0.75, curve: Curves.easeInOutCubicEmphasized),
+            curve: const Interval(0.0, 0.75,
+                curve: Curves.easeInOutCubicEmphasized),
           ),
         ),
         _dotSize = Tween<double>(begin: 0, end: 1).animate(
           CurvedAnimation(
             parent: animation,
-            curve: const Interval(0.75, 1, curve: Curves.easeInOutCubicEmphasized),
+            curve:
+                const Interval(0.75, 1, curve: Curves.easeInOutCubicEmphasized),
           ),
         ),
         super(repaint: animation);

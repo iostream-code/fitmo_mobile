@@ -15,37 +15,33 @@ import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class StatisticPage extends StatefulWidget {
-  const StatisticPage({Key? key}) : super(key: key);
-
-  @override
-  State<StatisticPage> createState() => _StatisticPageState();
-}
-
 enum AppState {
   DATA_NOT_FETCHED,
   FETCHING_DATA,
   DATA_READY,
   NO_DATA,
+  AUTHORIZED,
+  AUTH_NOT_GRANTED,
+}
+
+class StatisticPage extends StatefulWidget {
+  const StatisticPage({super.key});
+
+  @override
+  State<StatisticPage> createState() => _StatisticPageState();
 }
 
 class _StatisticPageState extends State<StatisticPage> {
   final List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
-  var health = HealthFactory();
 
-  /// All the data types that are available on Android and iOS.
-  /* List<HealthDataType> get types => (Platform.isAndroid)
-      ? dataTypeKeysAndroid
-      : (Platform.isIOS)
-          ? dataTypeKeysIOS
-          : []; */
+  final health = HealthFactory();
 
   static final types = [
     HealthDataType.STEPS,
     HealthDataType.HEART_RATE,
     HealthDataType.SLEEP_ASLEEP,
-    HealthDataType.ACTIVE_ENERGY_BURNED,
+    HealthDataType.BLOOD_OXYGEN,
   ];
 
   List<HealthDataAccess> get permissions =>
@@ -53,9 +49,7 @@ class _StatisticPageState extends State<StatisticPage> {
 
   @override
   void initState() {
-    health.useHealthConnectIfAvailable == true;
     authorize();
-    // fetchData();
     super.initState();
   }
 
@@ -75,13 +69,12 @@ class _StatisticPageState extends State<StatisticPage> {
         debugPrint("Exception in authorize: $error");
       }
     }
-    setState(() => _state =
-        (authorized) ? AppState.FETCHING_DATA : AppState.DATA_NOT_FETCHED);
+    setState(() {
+      (authorized) ? fetchData() : AppState.AUTH_NOT_GRANTED;
+    });
   }
 
   Future<void> fetchData() async {
-    setState(() => _state = AppState.FETCHING_DATA);
-
     final now = DateTime.now();
     final yesterday = now.subtract(const Duration(hours: 24));
     _healthDataList.clear();
@@ -116,12 +109,14 @@ class _StatisticPageState extends State<StatisticPage> {
       body: Column(
         children: [
           Dates(),
-          Expanded(
-            child: Center(
-              child: _content,
-            ),
-          ),
+          Steps(fitnessData: _healthDataList),
+          Graph(fitnessData: _healthDataList),
+          Info(fitnessData: _healthDataList),
+          Stats(),
           BottomNav(),
+          // Expanded(
+          //   child: Center(child: _content),
+          // ),
         ],
       ),
     );
@@ -134,9 +129,8 @@ class _StatisticPageState extends State<StatisticPage> {
               padding: const EdgeInsets.all(20),
               child: const CircularProgressIndicator(
                 strokeWidth: 10,
-                color: Colors.blue,
               )),
-          const Text('Memuat Data...')
+          const Text('Fetching data...'),
         ],
       );
 
@@ -144,7 +138,6 @@ class _StatisticPageState extends State<StatisticPage> {
       itemCount: _healthDataList.length,
       itemBuilder: (_, index) {
         HealthDataPoint p = _healthDataList[index];
-        print("this is content ready widget!");
         if (p.value is AudiogramHealthValue) {
           return ListTile(
             title: Text("${p.typeString}: ${p.value}"),
@@ -179,22 +172,30 @@ class _StatisticPageState extends State<StatisticPage> {
 
   final Widget _contentNoData = const Text('No Data to show');
 
-  final Widget _contentNotFetched = const Column(
+  final Widget _contentNotFetched =
+      const Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+    Text("Press 'Auth' to get permissions to access health data."),
+    Text("Press 'Fetch Data' to get health data."),
+    Text("Press 'Add Data' to add some random health data."),
+    Text("Press 'Delete Data' to remove some random health data."),
+  ]);
+
+  final Widget _authorized = const Text('Authorization granted!');
+
+  final Widget _authorizationNotGranted = const Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Steps(),
-      Graph(),
-      Info(),
-      Stats(),
+      Text('Authorization not given.'),
+      Text('You need to give all health permissions on Health Connect'),
     ],
   );
-
-  // final Widget _authorized = setState(() => _state = AppState.FETCHING_DATA);
 
   Widget get _content => switch (_state) {
         AppState.DATA_READY => _contentDataReady,
         AppState.DATA_NOT_FETCHED => _contentNotFetched,
         AppState.FETCHING_DATA => _contentFetchingData,
         AppState.NO_DATA => _contentNoData,
+        AppState.AUTHORIZED => _authorized,
+        AppState.AUTH_NOT_GRANTED => _authorizationNotGranted,
       };
 }
