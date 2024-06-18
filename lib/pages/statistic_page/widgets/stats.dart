@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Stats extends StatelessWidget {
+class Stats extends StatefulWidget {
   const Stats({Key? key}) : super(key: key);
 
+  @override
+  State<Stats> createState() => _StatsState();
+}
+
+class _StatsState extends State<Stats> {
   @override
   Widget build(BuildContext context) {
     return const Column(
@@ -12,7 +17,7 @@ class Stats extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Workout Stats',
+                'Activity Stats',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,

@@ -1,26 +1,23 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:health/health.dart';
 
 class Graph extends StatelessWidget {
-  final List<HealthDataPoint> fitnessData;
-  const Graph({Key? key, required this.fitnessData}) : super(key: key);
+  const Graph({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: SizedBox(
         width: double.infinity,
-        child: GraphArea(dataDump: fitnessData),
+        child: GraphArea(),
       ),
     );
   }
 }
 
 class GraphArea extends StatefulWidget {
-  final List<HealthDataPoint> dataDump;
-  const GraphArea({Key? key, required this.dataDump}) : super(key: key);
+  const GraphArea({Key? key}) : super(key: key);
 
   @override
   _GraphAreaState createState() => _GraphAreaState();

@@ -1,5 +1,6 @@
-import 'package:fitmo_mobile/pages/reports_page/controller/fitness_report_controller.dart';
+import 'package:carp_serializable/carp_serializable.dart';
 import 'package:flutter/material.dart';
+import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 
 class ReportList extends StatefulWidget {
@@ -9,13 +10,76 @@ class ReportList extends StatefulWidget {
   State<ReportList> createState() => _ReportListState();
 }
 
+enum AppState {
+  FETCHING_DATA,
+  DATA_READY,
+  NO_DATA,
+  AUTH_NOT_GRANTED,
+}
+
 class _ReportListState extends State<ReportList> {
-  final controller = FitnessReportController();
+  late List<HealthDataPoint> _healthDataList = [];
+  AppState _state = AppState.NO_DATA;
+  // final controller = FitnessReportController();
+
+  static final types = [
+    HealthDataType.STEPS,
+    HealthDataType.HEART_RATE,
+    HealthDataType.SLEEP_ASLEEP,
+    HealthDataType.BLOOD_OXYGEN,
+  ];
+
+  List<HealthDataAccess> get permissions =>
+      types.map((e) => HealthDataAccess.READ_WRITE).toList();
 
   @override
   void initState() {
-    controller.getHeartRateData();
+    authorize();
     super.initState();
+  }
+
+  Future<void> authorize() async {
+    bool? hasPermissions =
+        await HealthFactory().hasPermissions(types, permissions: permissions);
+    hasPermissions = false;
+    bool authorized = false;
+    if (!hasPermissions) {
+      try {
+        authorized = await HealthFactory()
+            .requestAuthorization(types, permissions: permissions);
+      } catch (error) {
+        debugPrint("Exception in authorize: $error");
+      }
+    }
+    setState(() => _state =
+        (authorized) ? AppState.FETCHING_DATA : AppState.AUTH_NOT_GRANTED);
+  }
+
+  Future<void> fetchData() async {
+    final now = DateTime.now();
+    final yesterday = now.subtract(const Duration(hours: 24));
+    _healthDataList.clear();
+
+    try {
+      List<HealthDataPoint> healthData =
+          await HealthFactory().getHealthDataFromTypes(
+        yesterday,
+        now,
+        types,
+      );
+
+      _healthDataList.addAll(
+          (healthData.length < 100) ? healthData : healthData.sublist(0, 100));
+    } catch (error) {
+      debugPrint("Exception in getHealthDataFromTypes: $error");
+    }
+    _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
+    for (var data in _healthDataList) {
+      debugPrint(toJsonString(data));
+    }
+    setState(() {
+      _state = _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
+    });
   }
 
   @override
@@ -49,9 +113,9 @@ class _ReportListState extends State<ReportList> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        controller.getHeartRateData();
+                        authorize();
                       },
-                      child: Text(
+                      child: const Text(
                         "Sync Data",
                         selectionColor: Colors.black,
                         style: TextStyle(
@@ -75,104 +139,152 @@ class _ReportListState extends State<ReportList> {
             SizedBox(
               height: 16.0,
             ),
-            Expanded(
-              child: ValueListenableBuilder(
-                valueListenable: controller.heartRate,
-                builder: (context, value, child) {
-                  return ListView(
-                    children: [
-                      for (final data in value)
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed('/activity/details');
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            height: 50,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color(0xffe1e1e1),
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                const SizedBox(width: 10),
-                                Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xffcff2ff),
-                                  ),
-                                  height: 35,
-                                  width: 35,
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/icon/running_icon.png'),
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 20),
-                                Text(
-                                  data.dataType,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                                const Expanded(
-                                  child: SizedBox(),
-                                ),
-                                const Icon(
-                                  Icons.date_range,
-                                  size: 12,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  DateFormat('h:m a').format(
-                                    data.dateFrom,
-                                  ),
-                                  style: const TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w300),
-                                ),
-                                const SizedBox(width: 10),
-                                Badge(
-                                  backgroundColor: Colors.green,
-                                  child: const Icon(
-                                    Icons.monitor_heart_outlined,
-                                    size: 12,
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "${data.value.toStringAsFixed(0)} Bpm",
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                    ],
-                  );
-                },
-              ),
-            ),
+            Expanded(child: _content),
           ],
         ),
       ),
     );
   }
+
+  Widget noData() {
+    return const Center(
+      child: Text("Data Not Found"),
+    );
+  }
+
+  Widget notAuthorized() {
+    return const Center(
+      child: Text("Authorization Not Given"),
+    );
+  }
+
+  Widget fetchingData() {
+    setState(() {
+      fetchData();
+    });
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          padding: const EdgeInsets.all(20),
+          child: const CircularProgressIndicator(
+            color: Color(0xff18b0e8),
+            strokeWidth: 10,
+          ),
+        ),
+        const Text(
+          'Wait a minute...',
+          style: TextStyle(color: Colors.black54),
+        ),
+      ],
+    );
+  }
+
+  Widget showData() {
+    return ListView.builder(
+      itemCount: _healthDataList.length,
+      itemBuilder: (_, index) {
+        HealthDataPoint data = _healthDataList[index];
+        return GestureDetector(
+          onTap: () {},
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: const Color(0xffe1e1e1),
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                const SizedBox(width: 10),
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xffcff2ff),
+                  ),
+                  height: 35,
+                  width: 35,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage('assets/icon/running_icon.png'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Text(
+                  data.typeString == "HEART_RATE"
+                      ? "Heart Rate"
+                      : data.typeString == "STEPS"
+                          ? "Steps"
+                          : data.typeString == "SLEEP_ASLEEP"
+                              ? "Sleep"
+                              : "Another",
+                  // "${data.typeString} ",
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const Expanded(
+                  child: SizedBox(),
+                ),
+                const Icon(
+                  Icons.date_range,
+                  size: 12,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  DateFormat('h:m a').format(
+                    data.dateFrom,
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w300),
+                ),
+                const SizedBox(width: 10),
+                Badge(
+                  backgroundColor: Colors.green,
+                  child: const Icon(
+                    Icons.monitor_heart_outlined,
+                    size: 12,
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  data.unitString == "BEATS_PER_MINUTE"
+                      ? "${data.value} Bpm"
+                      : data.unitString == "COUNT"
+                          ? "${data.value} Steps"
+                          : data.unitString == "MINUTE"
+                              ? "${data.value} Minute"
+                              : "",
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget get _content => switch (_state) {
+        AppState.NO_DATA => noData(),
+        AppState.AUTH_NOT_GRANTED => notAuthorized(),
+        AppState.FETCHING_DATA => fetchingData(),
+        AppState.DATA_READY => showData(),
+      };
 }

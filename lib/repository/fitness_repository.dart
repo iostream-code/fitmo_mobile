@@ -1,5 +1,6 @@
 import 'package:fitmo_mobile/models/blood_oxygen.dart';
 import 'package:fitmo_mobile/models/calories_burned.dart';
+import 'package:fitmo_mobile/models/fitness_stats.dart';
 import 'package:fitmo_mobile/models/foot_steps.dart';
 import 'package:fitmo_mobile/models/heart_rate.dart';
 import 'package:health/health.dart';
@@ -81,6 +82,58 @@ class FitnessRepository {
         var b = e;
         // print(b.value.toJson()['numericValue']);
         return FootSteps(
+          double.parse(b.value.toJson()['numericValue']),
+          b.unit.toString(),
+          b.dateFrom,
+          b.dateTo,
+          b.typeString,
+        );
+      }).toList();
+    }
+
+    return [];
+  }
+
+  static final types = [
+    HealthDataType.STEPS,
+    HealthDataType.HEART_RATE,
+    HealthDataType.SLEEP_ASLEEP,
+    HealthDataType.BLOOD_OXYGEN,
+  ];
+
+  Future<List<FitnessStats>> getFitnessStats() async {
+    bool requested = await health.requestAuthorization([
+      HealthDataType.HEART_RATE,
+      HealthDataType.STEPS,
+      HealthDataType.BLOOD_OXYGEN,
+      HealthDataType.SLEEP_ASLEEP,
+      HealthDataType.ACTIVE_ENERGY_BURNED,
+      HealthDataType.DISTANCE_DELTA,
+    ]);
+
+    if (requested) {
+      var now = DateTime.now();
+
+      List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
+        now.subtract(const Duration(days: 1)),
+        now,
+        [
+          HealthDataType.HEART_RATE,
+          HealthDataType.STEPS,
+          HealthDataType.BLOOD_OXYGEN,
+          HealthDataType.SLEEP_ASLEEP,
+          HealthDataType.ACTIVE_ENERGY_BURNED,
+          HealthDataType.DISTANCE_DELTA,
+        ],
+        // types,
+      );
+
+      print(fitnessData);
+
+      return fitnessData.map((e) {
+        var b = e;
+        // print(b.value.toJson()['numericValue']);
+        return FitnessStats(
           double.parse(b.value.toJson()['numericValue']),
           b.unit.toString(),
           b.dateFrom,

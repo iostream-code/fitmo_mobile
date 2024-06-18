@@ -8,7 +8,6 @@ import 'package:fitmo_mobile/pages/records_page/record_page.dart';
 import 'package:fitmo_mobile/pages/reports_page/fitness_report_report_page.dart';
 import 'package:fitmo_mobile/pages/reports_page/report_page.dart';
 import 'package:fitmo_mobile/pages/records_page/widgets/record_data_add.dart';
-import 'package:fitmo_mobile/pages/statistic_page/statistic_page_dump.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:fitmo_mobile/pages/statistic_page/statistic_page.dart';
