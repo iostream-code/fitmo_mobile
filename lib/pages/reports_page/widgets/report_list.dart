@@ -1,5 +1,7 @@
 import 'package:carp_serializable/carp_serializable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 
@@ -20,13 +22,12 @@ enum AppState {
 class _ReportListState extends State<ReportList> {
   late List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.NO_DATA;
-  // final controller = FitnessReportController();
 
   static final types = [
     HealthDataType.STEPS,
     HealthDataType.HEART_RATE,
     HealthDataType.SLEEP_ASLEEP,
-    HealthDataType.BLOOD_OXYGEN,
+    HealthDataType.ACTIVE_ENERGY_BURNED,
   ];
 
   List<HealthDataAccess> get permissions =>
@@ -186,6 +187,7 @@ class _ReportListState extends State<ReportList> {
       itemCount: _healthDataList.length,
       itemBuilder: (_, index) {
         HealthDataPoint data = _healthDataList[index];
+
         return GestureDetector(
           onTap: () {},
           child: Container(
@@ -226,7 +228,9 @@ class _ReportListState extends State<ReportList> {
                           ? "Steps"
                           : data.typeString == "SLEEP_ASLEEP"
                               ? "Sleep"
-                              : "Another",
+                              : data.typeString == "ACTIVE_ENERGY_BURNED"
+                                  ? "Energy Burned"
+                                  : "Unknown",
                   // "${data.typeString} ",
                   style: const TextStyle(
                     fontSize: 12,
@@ -264,7 +268,9 @@ class _ReportListState extends State<ReportList> {
                           ? "${data.value} Steps"
                           : data.unitString == "MINUTE"
                               ? "${data.value} Minute"
-                              : "",
+                              : data.unitString == "CALORIES"
+                                  ? "${data.value} Cal"
+                                  : "",
                   style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w300,

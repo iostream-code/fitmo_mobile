@@ -94,13 +94,6 @@ class FitnessRepository {
     return [];
   }
 
-  static final types = [
-    HealthDataType.STEPS,
-    HealthDataType.HEART_RATE,
-    HealthDataType.SLEEP_ASLEEP,
-    HealthDataType.BLOOD_OXYGEN,
-  ];
-
   Future<List<FitnessStats>> getFitnessStats() async {
     bool requested = await health.requestAuthorization([
       HealthDataType.HEART_RATE,
@@ -115,7 +108,7 @@ class FitnessRepository {
       var now = DateTime.now();
 
       List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
-        now.subtract(const Duration(days: 1)),
+        now.subtract(const Duration(hours: 24)),
         now,
         [
           HealthDataType.HEART_RATE,

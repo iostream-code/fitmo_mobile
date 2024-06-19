@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 class Stats extends StatefulWidget {
-  const Stats({Key? key}) : super(key: key);
+  final double dataAvgHr;
+  final double dataEnergyBurned;
+  final double dataSleepTime;
+
+  const Stats({
+    Key? key,
+    required this.dataAvgHr,
+    required this.dataEnergyBurned,
+    required this.dataSleepTime,
+  }) : super(key: key);
 
   @override
   State<Stats> createState() => _StatsState();
@@ -10,7 +19,7 @@ class Stats extends StatefulWidget {
 class _StatsState extends State<Stats> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
@@ -44,7 +53,7 @@ class _StatsState extends State<Stats> {
                 iconBackground: Color(0xffffe4fb),
                 time: '0s',
                 label: 'Heart Rate',
-                value: '- Bpm',
+                value: '${widget.dataAvgHr.toStringAsFixed(0)} Bpm',
               ),
               SizedBox(width: 15),
               InfoStat(
@@ -52,8 +61,8 @@ class _StatsState extends State<Stats> {
                 iconColor: Color.fromARGB(255, 194, 168, 20),
                 iconBackground: Color.fromARGB(255, 255, 221, 0),
                 time: '0s',
-                label: 'Energy',
-                value: '- Kkal',
+                label: 'Energy Burned',
+                value: '${widget.dataAvgHr.toStringAsFixed(0)} Kcal',
               ),
               SizedBox(width: 15),
               InfoStat(
@@ -61,8 +70,8 @@ class _StatsState extends State<Stats> {
                 iconColor: Color(0xff535bed),
                 iconBackground: Color(0xffe4e7ff),
                 time: '0s',
-                label: 'Time',
-                value: '--:--',
+                label: 'Sleep Time',
+                value: '${widget.dataSleepTime.toStringAsFixed(0)} Minute',
               ),
               SizedBox(width: 15),
             ],

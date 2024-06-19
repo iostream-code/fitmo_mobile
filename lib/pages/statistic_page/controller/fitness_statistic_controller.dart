@@ -27,10 +27,6 @@ class FitnessStatisticController {
     footSteps.value = await repository.getFootSteps();
   }
 
-  // Future<void> getCaloriesBurned() async {
-  //   caloriesBurned.value = await repository.getCaloriesBurned();
-  // }
-
   Future<void> getFitnessStats() async {
     fitnessStats.value = await repository.getFitnessStats();
   }

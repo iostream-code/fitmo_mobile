@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Info extends StatelessWidget {
   final double dataDistanceDelta;
   final double dataEnergyBurned;
+  final DateTime dataTime;
+
   const Info({
     Key? key,
     required this.dataDistanceDelta,
     required this.dataEnergyBurned,
+    required this.dataTime,
   }) : super(key: key);
 
   @override
@@ -25,9 +29,9 @@ class Info extends StatelessWidget {
           label: 'Distance',
         ),
         StatsInfo(
-          value: '-',
-          unit: 'Hr',
-          label: 'Duration',
+          value: DateFormat('Hm').format(dataTime),
+          unit: DateFormat('a').format(dataTime),
+          label: 'Time',
         ),
       ],
     );

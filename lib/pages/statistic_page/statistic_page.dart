@@ -34,16 +34,6 @@ class _StatisticPageState extends State<StatisticPage> {
       appBar: MainAppBar(
         appBar: AppBar(),
       ),
-      // body: Column(
-      //   children: [
-      //     Dates(),
-      //     Steps(),
-      //     Graph(),
-      //     Info(),
-      //     Stats(),
-      //     BottomNav(),
-      //   ],
-      // ),
       body: Column(
         children: [
           Dates(),
@@ -51,19 +41,18 @@ class _StatisticPageState extends State<StatisticPage> {
             valueListenable: controller.fitnessStats,
             builder: (context, value, child) {
               double steps = 0;
-              DateTime time;
+              DateTime time = DateTime.now();
               double energyBurned = 0;
               double distanceDelta = 0;
               double hr = 0;
               double countHr = 0;
               double avgHr;
+              double sleepTime = 0;
 
               for (final data in value) {
-                print(data.dataType);
                 if (data.dataType == "STEPS") {
-                  time = data.dateFrom;
-                  print(time);
                   steps += data.value;
+                  time = data.dateTo;
                 } else if (data.dataType == "HEART_RATE") {
                   hr += data.value;
                   countHr++;
@@ -71,6 +60,8 @@ class _StatisticPageState extends State<StatisticPage> {
                   energyBurned += data.value;
                 } else if (data.dataType == "DISTANCE_DELTA") {
                   distanceDelta += data.value;
+                } else if (data.dataType == "SLEEP_ASLEEP") {
+                  sleepTime = data.value;
                 }
               }
 
@@ -84,14 +75,19 @@ class _StatisticPageState extends State<StatisticPage> {
                     Info(
                       dataDistanceDelta: distanceDelta,
                       dataEnergyBurned: energyBurned,
+                      dataTime: time,
                     ),
-                    Stats(),
+                    Stats(
+                      dataAvgHr: avgHr,
+                      dataEnergyBurned: energyBurned,
+                      dataSleepTime: sleepTime,
+                    ),
                   ],
                 ),
               );
             },
           ),
-          BottomNav(),
+          const BottomNav(),
         ],
       ),
     );
