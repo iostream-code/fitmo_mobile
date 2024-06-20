@@ -254,12 +254,9 @@ class _ReportListState extends State<ReportList> {
                       fontSize: 10, fontWeight: FontWeight.w300),
                 ),
                 const SizedBox(width: 10),
-                const Badge(
-                  backgroundColor: Colors.green,
-                  child: Icon(
-                    Icons.monitor_heart_outlined,
-                    size: 12,
-                  ),
+                Icon(
+                  Icons.monitor_heart_outlined,
+                  size: 12,
                 ),
                 const SizedBox(width: 5),
                 Text(
