@@ -81,7 +81,7 @@ class ActivityList extends StatelessWidget {
                           ),
                           tileColor: Colors.white,
                           leading: Text(
-                            data.targetHr.toString(),
+                            data.detail.avgHr.toString(),
                             style: const TextStyle(
                               fontSize: 20,
                             ),

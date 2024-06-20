@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 const List<String> activityType = <String>[
   'RUNNING',
   'WALKING',
+  'DAILY',
 ];
 
 class ActivityAddPage extends StatefulWidget {
@@ -18,9 +19,8 @@ class ActivityAddPage extends StatefulWidget {
 }
 
 class _ActivityAddPageState extends State<ActivityAddPage> {
-  final TextEditingController _valueController = TextEditingController();
-  final TextEditingController _fitnessTypeController = TextEditingController();
-  final TextEditingController _unitController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _activityNameController = TextEditingController();
 
   final ActivityDatabase _database = ActivityDatabase();
   final controller = FitnessStatisticController();
@@ -29,8 +29,13 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
 
   @override
   void initState() {
-    controller.getFitnessStats();
+    fetchData();
     super.initState();
+  }
+
+  Future<void> fetchData() async {
+    await Future.delayed(Duration(seconds: 3));
+    controller.getHeartRateData();
   }
 
   @override
@@ -40,24 +45,31 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
         children: [
           const ActivityHeader(),
           ValueListenableBuilder(
-            valueListenable: controller.fitnessStats,
+            valueListenable: controller.heartRate,
             builder: (context, value, child) {
               double hr = 0;
               double avgHr = 0;
               double maxHr = 0;
               double restHr = 0;
               double countHr = 0;
+              double vo2Max = 0;
+
+              if (value.isNotEmpty) restHr = value[0].value;
 
               for (final data in value) {
-                if (data.dataType == "HEART_RATE") {
-                  hr += data.value;
-
-                  maxHr > data.value ? restHr = data.value : maxHr = data.value;
-                }
+                hr += data.value;
+                if (maxHr < data.value) maxHr = data.value;
+                if (data.value < restHr) restHr = data.value;
                 countHr++;
               }
 
-              return formField();
+              avgHr = hr / countHr;
+
+              return formField(
+                avgHr: avgHr,
+                maxHr: maxHr,
+                restHr: restHr,
+              );
             },
           ),
         ],
@@ -65,7 +77,11 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
     );
   }
 
-  Widget formField() {
+  Widget formField({
+    required double maxHr,
+    required double restHr,
+    required double avgHr,
+  }) {
     return FormField(builder: (state) {
       return Padding(
         padding: const EdgeInsets.symmetric(
@@ -89,9 +105,8 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
                           height: 20.0,
                         ),
                         DropdownMenu(
-                          // width: fixedScreen.width,
                           width: 296,
-                          // controller: _fitnessTypeController,
+                          controller: _activityNameController,
                           label: const Text("Activity"),
                           initialSelection: activityType.first,
                           onSelected: (String? value) {
@@ -105,9 +120,9 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
                                 value: value, label: value);
                           }).toList(),
                         ),
-                        const TextField(
-                          // controller: _valueController,
-                          decoration: InputDecoration(
+                        TextField(
+                          controller: _ageController,
+                          decoration: const InputDecoration(
                             labelText: "Age",
                             labelStyle: TextStyle(
                               color: Colors.black,
@@ -137,25 +152,37 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
                   ),
                 ),
                 onPressed: () {
-                  // CHANGE THIS CODE !!!
+                  double age = double.parse(_ageController.text);
+                  double targetHr = maxHr - restHr;
+                  double limitMaxHr = 220 - age;
+                  double vo2Max = 15 * (limitMaxHr / restHr);
+                  String status = "";
+
+                  if (avgHr < (maxHr * 0.5)) {
+                    status = "GOOD";
+                  } else if (avgHr > (maxHr * 0.5) && avgHr < (maxHr * 0.7)) {
+                    status = "FAIR";
+                  } else {
+                    status = "BAD";
+                  }
+
                   ActivityData data = ActivityData(
-                    activityName: "RUNNING",
-                    age: 25,
+                    activityName: _activityNameController.text,
+                    age: age.toInt(),
                     detail: Detail(
-                      avgHr: 76,
-                      maxHr: 109,
-                      restHr: 65,
-                      status: "BAD",
-                      vo2Max: 30,
+                      avgHr: avgHr.toInt(),
+                      maxHr: maxHr.toInt(),
+                      restHr: restHr.toInt(),
+                      status: status,
+                      vo2Max: vo2Max.toInt(),
                     ),
-                    targetHr: 79,
+                    targetHr: targetHr.toInt(),
                     timestamp: Timestamp.now(),
                   );
                   _database.addActivityData(data);
                   Navigator.pop(context);
-                  _valueController.clear();
-                  _unitController.clear();
-                  _fitnessTypeController.clear();
+                  _ageController.clear();
+                  _activityNameController.clear();
                 },
               ),
             ),
