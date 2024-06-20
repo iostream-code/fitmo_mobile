@@ -29,7 +29,7 @@ class Info extends StatelessWidget {
           label: 'Distance',
         ),
         StatsInfo(
-          value: DateFormat('Hm').format(dataTime),
+          value: DateFormat('h:mm').format(dataTime),
           unit: DateFormat('a').format(dataTime),
           label: 'Time',
         ),

@@ -34,7 +34,7 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
   }
 
   Future<void> fetchData() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
     controller.getHeartRateData();
   }
 

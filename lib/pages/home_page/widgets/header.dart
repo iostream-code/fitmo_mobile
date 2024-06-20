@@ -49,7 +49,7 @@ class AppHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Aryakkk',
+                  'Peeps',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
