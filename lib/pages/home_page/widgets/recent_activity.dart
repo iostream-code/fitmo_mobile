@@ -102,9 +102,9 @@ class RecentActivities extends StatelessWidget {
                             ),
                             const SizedBox(width: 10),
                             Badge(
-                              backgroundColor: data.detail.status == 'bad'
+                              backgroundColor: data.detail.status == 'BAD'
                                   ? Colors.red
-                                  : data.detail.status == 'fair'
+                                  : data.detail.status == 'FAIR'
                                       ? Colors.yellow.shade700
                                       : Colors.green,
                               child: const Icon(
