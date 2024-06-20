@@ -10,17 +10,17 @@ class Steps extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
             children: [
               Text(
                 data == 0 ? "-" : "${data.toInt()}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.w900,
                 ),
               ),
-              Text(
+              const Text(
                 'Total Steps',
                 style: TextStyle(
                   fontSize: 11,

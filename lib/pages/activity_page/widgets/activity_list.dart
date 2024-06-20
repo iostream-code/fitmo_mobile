@@ -81,13 +81,13 @@ class ActivityList extends StatelessWidget {
                           ),
                           tileColor: Colors.white,
                           leading: Text(
-                            data.value.toString(),
+                            data.targetHr.toString(),
                             style: const TextStyle(
                               fontSize: 20,
                             ),
                           ),
                           title: Text(
-                            data.activity_name.capitalize,
+                            data.activityName.capitalize,
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -101,9 +101,9 @@ class ActivityList extends StatelessWidget {
                               fontSize: 10,
                             ),
                           ),
-                          trailing: data.status == 'bad'
+                          trailing: data.detail.status == 'BAD'
                               ? Image.asset('assets/emoticon/unhappy.png')
-                              : data.status == 'fair'
+                              : data.detail.status == 'FAIR'
                                   ? Image.asset('assets/emoticon/mood.png')
                                   : Image.asset('assets/emoticon/smile.png'),
                         ),

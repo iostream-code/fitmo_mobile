@@ -1,10 +1,8 @@
 import 'package:fitmo_mobile/models/blood_oxygen.dart';
-import 'package:fitmo_mobile/models/calories_burned.dart';
 import 'package:fitmo_mobile/models/fitness_stats.dart';
 import 'package:fitmo_mobile/models/foot_steps.dart';
 import 'package:fitmo_mobile/models/heart_rate.dart';
 import 'package:health/health.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class FitnessRepository {
   final health = HealthFactory();

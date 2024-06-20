@@ -1,7 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitmo_mobile/models/calories_burned.dart';
-import 'package:fitmo_mobile/models/fitness_stats.dart';
-import 'package:fitmo_mobile/pages/reports_page/controller/fitness_report_controller.dart';
 import 'package:fitmo_mobile/pages/statistic_page/controller/fitness_statistic_controller.dart';
 import 'package:fitmo_mobile/pages/statistic_page/widgets/appbar.dart';
 import 'package:fitmo_mobile/pages/statistic_page/widgets/stats.dart';
@@ -36,7 +32,7 @@ class _StatisticPageState extends State<StatisticPage> {
       ),
       body: Column(
         children: [
-          Dates(),
+          const Dates(),
           ValueListenableBuilder(
             valueListenable: controller.fitnessStats,
             builder: (context, value, child) {
@@ -71,7 +67,7 @@ class _StatisticPageState extends State<StatisticPage> {
                 child: Column(
                   children: [
                     Steps(data: steps),
-                    Graph(),
+                    const Graph(),
                     Info(
                       dataDistanceDelta: distanceDelta,
                       dataEnergyBurned: energyBurned,

@@ -1,7 +1,5 @@
 import 'package:carp_serializable/carp_serializable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +18,7 @@ enum AppState {
 }
 
 class _ReportListState extends State<ReportList> {
-  late List<HealthDataPoint> _healthDataList = [];
+  List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.NO_DATA;
 
   static final types = [
@@ -69,8 +67,9 @@ class _ReportListState extends State<ReportList> {
         types,
       );
 
-      _healthDataList.addAll(
-          (healthData.length < 100) ? healthData : healthData.sublist(0, 100));
+      _healthDataList.addAll((healthData.length < 1000)
+          ? healthData
+          : healthData.sublist(0, 1000));
     } catch (error) {
       debugPrint("Exception in getHealthDataFromTypes: $error");
     }
@@ -129,7 +128,7 @@ class _ReportListState extends State<ReportList> {
                 ),
                 Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 64.0,
                       child: Image.asset('assets/icon/health_check.png'),
                     ),
@@ -137,10 +136,12 @@ class _ReportListState extends State<ReportList> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 16.0,
             ),
-            Expanded(child: _content),
+            Expanded(
+              child: _content,
+            ),
           ],
         ),
       ),
@@ -253,9 +254,9 @@ class _ReportListState extends State<ReportList> {
                       fontSize: 10, fontWeight: FontWeight.w300),
                 ),
                 const SizedBox(width: 10),
-                Badge(
+                const Badge(
                   backgroundColor: Colors.green,
-                  child: const Icon(
+                  child: Icon(
                     Icons.monitor_heart_outlined,
                     size: 12,
                   ),
@@ -263,13 +264,13 @@ class _ReportListState extends State<ReportList> {
                 const SizedBox(width: 5),
                 Text(
                   data.unitString == "BEATS_PER_MINUTE"
-                      ? "${data.value} Bpm"
+                      ? "${double.parse(data.value.toJson()['numericValue']).toStringAsFixed(0)} Bpm"
                       : data.unitString == "COUNT"
                           ? "${data.value} Steps"
                           : data.unitString == "MINUTE"
                               ? "${data.value} Minute"
-                              : data.unitString == "CALORIES"
-                                  ? "${data.value} Cal"
+                              : data.unitString == "KILOCALORIE"
+                                  ? "${double.parse(data.value.toJson()['numericValue']).toStringAsFixed(2)} Kcal"
                                   : "",
                   style: const TextStyle(
                     fontSize: 10,

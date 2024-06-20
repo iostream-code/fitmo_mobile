@@ -19,12 +19,12 @@ class Info extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         StatsInfo(
-          value: '${dataEnergyBurned.toStringAsFixed(0)}',
+          value: dataEnergyBurned.toStringAsFixed(0),
           unit: 'Kcal',
           label: 'Calories',
         ),
         StatsInfo(
-          value: '${dataDistanceDelta.toStringAsFixed(0)}',
+          value: dataDistanceDelta.toStringAsFixed(0),
           unit: 'Meters',
           label: 'Distance',
         ),

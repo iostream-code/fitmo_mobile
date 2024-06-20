@@ -79,7 +79,7 @@ class RecentActivities extends StatelessWidget {
                             ),
                             const SizedBox(width: 20),
                             Text(
-                              data.activity_name.capitalize,
+                              data.activityName.capitalize,
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w900,
@@ -102,9 +102,9 @@ class RecentActivities extends StatelessWidget {
                             ),
                             const SizedBox(width: 10),
                             Badge(
-                              backgroundColor: data.status == 'bad'
+                              backgroundColor: data.detail.status == 'bad'
                                   ? Colors.red
-                                  : data.status == 'fair'
+                                  : data.detail.status == 'fair'
                                       ? Colors.yellow.shade700
                                       : Colors.green,
                               child: const Icon(
@@ -114,7 +114,7 @@ class RecentActivities extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              data.status.capitalize,
+                              data.detail.status.capitalize,
                               style: const TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w300,

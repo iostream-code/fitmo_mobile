@@ -7,7 +7,7 @@ class Graph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return const Expanded(
       child: SizedBox(
         width: double.infinity,
         child: GraphArea(),
@@ -17,7 +17,10 @@ class Graph extends StatelessWidget {
 }
 
 class GraphArea extends StatefulWidget {
-  const GraphArea({Key? key}) : super(key: key);
+  const GraphArea({
+    Key? key,
+    // required this.dataPoint,
+  }) : super(key: key);
 
   @override
   _GraphAreaState createState() => _GraphAreaState();
@@ -54,6 +57,7 @@ class _GraphAreaState extends State<GraphArea>
 
   @override
   Widget build(BuildContext context) {
+    // print(widget.point);
     return GestureDetector(
       onTap: () {
         _animationController.forward(from: 0.0);
