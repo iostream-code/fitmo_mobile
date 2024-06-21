@@ -1,4 +1,5 @@
 import 'package:fitmo_mobile/models/activity_data.dart';
+import 'package:fitmo_mobile/pages/activity_page/activity_detail_page.dart';
 import 'package:fitmo_mobile/services/activity_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -65,12 +66,20 @@ class ActivityList extends StatelessWidget {
                     itemCount: activityData.length,
                     itemBuilder: (context, index) {
                       ActivityData data = activityData[index].data();
+                      String dataId = activityData[index].id;
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: ListTile(
                           onTap: () {
-                            Navigator.of(context).pushNamed('/activity/detail');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ActivityDetailPage(dataId: dataId)),
+                            );
+                            // Navigator.of(context)
+                            //     .pushNamed('/activity/detail/$dataId');
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
