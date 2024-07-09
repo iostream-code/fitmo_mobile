@@ -1,6 +1,7 @@
 import 'package:fitmo_mobile/models/activity_data.dart';
 import 'package:fitmo_mobile/services/activity_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:string_extensions/string_extensions.dart';
 
@@ -44,9 +45,9 @@ class RecentActivities extends StatelessWidget {
                     ActivityData data = activityData[index].data();
 
                     return GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/activity/details');
-                      },
+                      // onTap: () {
+                      //   Navigator.of(context).pushNamed('/activity/details');
+                      // },
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         height: 50,
@@ -85,20 +86,31 @@ class RecentActivities extends StatelessWidget {
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
-                            const Expanded(
-                              child: SizedBox(),
-                            ),
-                            const Icon(
-                              Icons.date_range,
-                              size: 12,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              DateFormat('EEE, d').format(
-                                data.timestamp.toDate(),
+                            Expanded(
+                              child: SizedBox(
+                                child: Container(),
                               ),
-                              style: const TextStyle(
-                                  fontSize: 10, fontWeight: FontWeight.w300),
+                            ),
+                            SizedBox(
+                              width: 52,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.date_range,
+                                    size: 12,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    DateFormat('EEE, d').format(
+                                      data.timestamp.toDate(),
+                                    ),
+                                    style: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(width: 10),
                             Badge(

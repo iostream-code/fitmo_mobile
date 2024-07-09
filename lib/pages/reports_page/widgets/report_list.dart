@@ -176,7 +176,7 @@ class _ReportListState extends State<ReportList> {
           ),
         ),
         const Text(
-          'Wait a minute...',
+          'Wait a second...',
           style: TextStyle(color: Colors.black54),
         ),
       ],
@@ -241,37 +241,45 @@ class _ReportListState extends State<ReportList> {
                 const Expanded(
                   child: SizedBox(),
                 ),
-                const Icon(
-                  Icons.date_range,
-                  size: 12,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  DateFormat('h:m a').format(
-                    data.dateFrom,
-                  ),
-                  style: const TextStyle(
-                      fontSize: 10, fontWeight: FontWeight.w300),
-                ),
-                const SizedBox(width: 10),
-                Icon(
-                  Icons.monitor_heart_outlined,
-                  size: 12,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  data.unitString == "BEATS_PER_MINUTE"
-                      ? "${double.parse(data.value.toJson()['numericValue']).toStringAsFixed(0)} Bpm"
-                      : data.unitString == "COUNT"
-                          ? "${data.value} Steps"
-                          : data.unitString == "MINUTE"
-                              ? "${data.value} Minute"
-                              : data.unitString == "KILOCALORIE"
-                                  ? "${double.parse(data.value.toJson()['numericValue']).toStringAsFixed(2)} Kcal"
-                                  : "",
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w300,
+                SizedBox(
+                  width: 132,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.date_range,
+                        size: 12,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        DateFormat('h:m a').format(
+                          data.dateFrom,
+                        ),
+                        style: const TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w300),
+                      ),
+                      const SizedBox(width: 10),
+                      const Icon(
+                        Icons.monitor_heart_outlined,
+                        size: 12,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        data.unitString == "BEATS_PER_MINUTE"
+                            ? "${double.parse(data.value.toJson()['numericValue']).toStringAsFixed(0)} Bpm"
+                            : data.unitString == "COUNT"
+                                ? "${data.value} Steps"
+                                : data.unitString == "MINUTE"
+                                    ? "${data.value} Minute"
+                                    : data.unitString == "KILOCALORIE"
+                                        ? "${double.parse(data.value.toJson()['numericValue']).toStringAsFixed(2)} Kcal"
+                                        : "",
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(

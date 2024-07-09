@@ -78,8 +78,6 @@ class ActivityList extends StatelessWidget {
                                   builder: (context) =>
                                       ActivityDetailPage(dataId: dataId)),
                             );
-                            // Navigator.of(context)
-                            //     .pushNamed('/activity/detail/$dataId');
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),

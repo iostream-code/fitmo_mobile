@@ -45,22 +45,22 @@ class ActivityStatusDetail extends StatelessWidget {
                         DetailCard(
                           value: maxHr,
                           label: "Max Heart Rate",
-                          image: "assets/emoticon/smile.png",
+                          code: "MHR",
                         ),
                         DetailCard(
                           value: restHr,
                           label: "Resting Heart Rate",
-                          image: "assets/emoticon/smile.png",
+                          code: "RHR",
                         ),
                         DetailCard(
                           value: avgHr,
                           label: "Average Heart Rate",
-                          image: "assets/emoticon/smile.png",
+                          code: "AVGHR",
                         ),
                         DetailCard(
                           value: vo2Max,
                           label: "VO2Max",
-                          image: "assets/emoticon/smile.png",
+                          code: "VOMAX",
                         ),
                       ],
                     ),
@@ -78,13 +78,13 @@ class ActivityStatusDetail extends StatelessWidget {
 class DetailCard extends StatelessWidget {
   final int value;
   final String label;
-  final String image;
+  final String code;
 
   const DetailCard({
     Key? key,
     required this.value,
     required this.label,
-    required this.image,
+    required this.code,
   }) : super(key: key);
 
   @override
