@@ -3,7 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ActivityStatusDetail extends StatelessWidget {
-  const ActivityStatusDetail({super.key});
+  final int maxHr;
+  final int restHr;
+  final int avgHr;
+  final int vo2Max;
+
+  const ActivityStatusDetail({
+    super.key,
+    required this.maxHr,
+    required this.restHr,
+    required this.avgHr,
+    required this.vo2Max,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +25,7 @@ class ActivityStatusDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Detail Activity",
+              "Detail Activity Data",
               style: Theme.of(context).textTheme.displayLarge,
             ),
             const SizedBox(
@@ -32,28 +43,24 @@ class ActivityStatusDetail extends StatelessWidget {
                       crossAxisSpacing: 10,
                       children: [
                         DetailCard(
-                          value: 128,
-                          time: Timestamp.now(),
+                          value: maxHr,
                           label: "Max Heart Rate",
-                          image: "assets/emoticon/smile.png",
+                          code: "MHR",
                         ),
                         DetailCard(
-                          value: 128,
-                          time: Timestamp.now(),
+                          value: restHr,
                           label: "Resting Heart Rate",
-                          image: "assets/emoticon/smile.png",
+                          code: "RHR",
                         ),
                         DetailCard(
-                          value: 128,
-                          time: Timestamp.now(),
+                          value: avgHr,
                           label: "Average Heart Rate",
-                          image: "assets/emoticon/smile.png",
+                          code: "AVGHR",
                         ),
                         DetailCard(
-                          value: 128,
-                          time: Timestamp.now(),
+                          value: vo2Max,
                           label: "VO2Max",
-                          image: "assets/emoticon/smile.png",
+                          code: "VOMAX",
                         ),
                       ],
                     ),
@@ -70,16 +77,14 @@ class ActivityStatusDetail extends StatelessWidget {
 
 class DetailCard extends StatelessWidget {
   final int value;
-  final Timestamp time;
   final String label;
-  final String image;
+  final String code;
 
   const DetailCard({
     Key? key,
     required this.value,
-    required this.time,
     required this.label,
-    required this.image,
+    required this.code,
   }) : super(key: key);
 
   @override
@@ -109,7 +114,7 @@ class DetailCard extends StatelessWidget {
             iconColor: Colors.red.shade100,
             iconBackground: Colors.red,
           ),
-          Change(time: time),
+          // Change(time: time),
           Align(
             alignment: Alignment.bottomLeft,
             child: Column(

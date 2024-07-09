@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
 
-class Stats extends StatelessWidget {
-  const Stats({Key? key}) : super(key: key);
+class Stats extends StatefulWidget {
+  final double dataAvgHr;
+  final double dataEnergyBurned;
+  final double dataSleepTime;
+
+  const Stats({
+    Key? key,
+    required this.dataAvgHr,
+    required this.dataEnergyBurned,
+    required this.dataSleepTime,
+  }) : super(key: key);
 
   @override
+  State<Stats> createState() => _StatsState();
+}
+
+class _StatsState extends State<Stats> {
+  @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Padding(
+        const Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Row(
             children: [
               Text(
-                'Workout Stats',
+                'Activity Stats',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
@@ -27,39 +41,39 @@ class Stats extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              SizedBox(width: 30),
-              InfoStat(
-                icon: Icons.timer,
-                iconColor: Color(0xff535bed),
-                iconBackground: Color(0xffe4e7ff),
-                time: '+5s',
-                label: 'Time',
-                value: '30:34',
-              ),
-              SizedBox(width: 15),
+              const SizedBox(width: 30),
               InfoStat(
                 icon: Icons.favorite_outline,
-                iconColor: Color(0xffe11e6c),
-                iconBackground: Color(0xffffe4fb),
-                time: '+5s',
+                iconColor: const Color(0xffe11e6c),
+                iconBackground: const Color(0xffffe4fb),
+                time: '0s',
                 label: 'Heart Rate',
-                value: '151bpm',
+                value: '${widget.dataAvgHr.toStringAsFixed(0)} Bpm',
               ),
-              SizedBox(width: 15),
+              const SizedBox(width: 15),
               InfoStat(
                 icon: Icons.bolt,
-                iconColor: Color.fromARGB(255, 194, 168, 20),
-                iconBackground: Color.fromARGB(255, 255, 221, 0),
-                time: '+5s',
-                label: 'Energy',
-                value: '169kcal',
+                iconColor: const Color.fromARGB(255, 194, 168, 20),
+                iconBackground: const Color.fromARGB(255, 255, 221, 0),
+                time: '0s',
+                label: 'Energy Burned',
+                value: '${widget.dataAvgHr.toStringAsFixed(0)} Kcal',
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 15),
+              InfoStat(
+                icon: Icons.timer,
+                iconColor: const Color(0xff535bed),
+                iconBackground: const Color(0xffe4e7ff),
+                time: '0s',
+                label: 'Sleep Time',
+                value: '${widget.dataSleepTime.toStringAsFixed(0)} Minute',
+              ),
+              const SizedBox(width: 15),
             ],
           ),
         )

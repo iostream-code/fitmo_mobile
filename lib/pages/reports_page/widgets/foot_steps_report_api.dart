@@ -45,7 +45,6 @@ class _FootStepsReportApiState extends State<FootStepsReportApi> {
               height: 10,
             ),
             Expanded(
-              // child: fitnessCard(),
               child: ValueListenableBuilder(
                 valueListenable: controller.footSteps,
                 builder: (context, value, child) {

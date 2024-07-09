@@ -1,5 +1,5 @@
-import 'package:fitmo_mobile/models/blood_glucose.dart';
 import 'package:fitmo_mobile/models/blood_oxygen.dart';
+import 'package:fitmo_mobile/models/fitness_stats.dart';
 import 'package:fitmo_mobile/models/foot_steps.dart';
 import 'package:fitmo_mobile/models/heart_rate.dart';
 import 'package:health/health.dart';
@@ -35,25 +35,6 @@ class FitnessRepository {
     return [];
   }
 
-  // Future<bool> getHeartRate() async {
-  //   bool requested =
-  //       await health.requestAuthorization([HealthDataType.HEART_RATE]);
-
-  //   if (requested) {
-  //     var now = DateTime.now();
-
-  //     List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
-  //       now.subtract(const Duration(days: 7)),
-  //       now,
-  //       [HealthDataType.HEART_RATE],
-  //     );
-
-  //     return fitnessData.isNotEmpty;
-  //   }
-
-  //   return false;
-  // }
-
   Future<List<BloodOxygen>> getBloodOxygen() async {
     bool requested =
         await health.requestAuthorization([HealthDataType.BLOOD_OXYGEN]);
@@ -83,27 +64,6 @@ class FitnessRepository {
     return [];
   }
 
-  // Future<bool> getBloodOxygen() async {
-  //   bool requested =
-  //       await health.requestAuthorization([HealthDataType.BLOOD_OXYGEN]);
-
-  //   if (requested) {
-  //     var now = DateTime.now();
-
-  //     List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
-  //       now.subtract(const Duration(days: 7)),
-  //       now,
-  //       [HealthDataType.BLOOD_OXYGEN],
-  //     );
-
-  //     print(fitnessData);
-
-  //     return fitnessData.isNotEmpty;
-  //   }
-
-  //   return false;
-  // }
-
   Future<List<FootSteps>> getFootSteps() async {
     bool requested = await health.requestAuthorization([HealthDataType.STEPS]);
 
@@ -132,31 +92,44 @@ class FitnessRepository {
     return [];
   }
 
-  Future<List<BloodGlucose>> getBloodGlucose() async {
+  Future<List<FitnessStats>> getFitnessStats() async {
     bool requested = await health.requestAuthorization([
-      HealthDataType.BLOOD_GLUCOSE,
+      HealthDataType.HEART_RATE,
+      HealthDataType.STEPS,
+      HealthDataType.BLOOD_OXYGEN,
+      HealthDataType.SLEEP_ASLEEP,
+      HealthDataType.ACTIVE_ENERGY_BURNED,
+      HealthDataType.DISTANCE_DELTA,
     ]);
 
     if (requested) {
-      print('Class has been accessed!');
-      print(requested);
+      var now = DateTime.now();
 
       List<HealthDataPoint> fitnessData = await health.getHealthDataFromTypes(
-        DateTime.now().subtract(const Duration(days: 7)),
-        DateTime.now(),
+        now.subtract(const Duration(hours: 24)),
+        now,
         [
-          HealthDataType.BLOOD_GLUCOSE,
+          HealthDataType.HEART_RATE,
+          HealthDataType.STEPS,
+          HealthDataType.BLOOD_OXYGEN,
+          HealthDataType.SLEEP_ASLEEP,
+          HealthDataType.ACTIVE_ENERGY_BURNED,
+          HealthDataType.DISTANCE_DELTA,
         ],
+        // types,
       );
+
+      print(fitnessData);
 
       return fitnessData.map((e) {
         var b = e;
-        print(b.value.toJson()['numericValue']);
-        return BloodGlucose(
+        // print(b.value.toJson()['numericValue']);
+        return FitnessStats(
           double.parse(b.value.toJson()['numericValue']),
           b.unit.toString(),
           b.dateFrom,
           b.dateTo,
+          b.typeString,
         );
       }).toList();
     }

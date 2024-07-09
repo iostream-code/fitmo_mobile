@@ -33,18 +33,6 @@ class _ReportHeaderState extends State<ReportHeader> {
           fontSize: 18,
         ),
       ),
-      actions: [
-        IconButton(
-          onPressed: () {
-            controller.getHeartRateData();
-          },
-          icon: Icon(
-            Icons.download,
-            size: 24,
-            color: Colors.white,
-          ),
-        ),
-      ],
       centerTitle: true,
     );
   }

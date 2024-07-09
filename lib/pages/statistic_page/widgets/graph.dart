@@ -17,7 +17,10 @@ class Graph extends StatelessWidget {
 }
 
 class GraphArea extends StatefulWidget {
-  const GraphArea({Key? key}) : super(key: key);
+  const GraphArea({
+    Key? key,
+    // required this.dataPoint,
+  }) : super(key: key);
 
   @override
   _GraphAreaState createState() => _GraphAreaState();
@@ -54,6 +57,7 @@ class _GraphAreaState extends State<GraphArea>
 
   @override
   Widget build(BuildContext context) {
+    // print(widget.point);
     return GestureDetector(
       onTap: () {
         _animationController.forward(from: 0.0);
@@ -74,13 +78,15 @@ class GraphPainter extends CustomPainter {
       : _size = Tween<double>(begin: 0, end: 1).animate(
           CurvedAnimation(
             parent: animation,
-            curve: const Interval(0.0, 0.75, curve: Curves.easeInOutCubicEmphasized),
+            curve: const Interval(0.0, 0.75,
+                curve: Curves.easeInOutCubicEmphasized),
           ),
         ),
         _dotSize = Tween<double>(begin: 0, end: 1).animate(
           CurvedAnimation(
             parent: animation,
-            curve: const Interval(0.75, 1, curve: Curves.easeInOutCubicEmphasized),
+            curve:
+                const Interval(0.75, 1, curve: Curves.easeInOutCubicEmphasized),
           ),
         ),
         super(repaint: animation);

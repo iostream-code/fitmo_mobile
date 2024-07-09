@@ -22,6 +22,10 @@ class ActivityDatabase {
     return _activityRef.snapshots();
   }
 
+  DocumentReference<Object?> detailActivityData(String dataId) {
+    return _activityRef.doc(dataId);
+  }
+
   void addActivityData(ActivityData data) async {
     _activityRef.add(data);
   }

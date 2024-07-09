@@ -1,27 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Info extends StatelessWidget {
-  const Info({Key? key}) : super(key: key);
+  final double dataDistanceDelta;
+  final double dataEnergyBurned;
+  final DateTime dataTime;
+
+  const Info({
+    Key? key,
+    required this.dataDistanceDelta,
+    required this.dataEnergyBurned,
+    required this.dataTime,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         StatsInfo(
-          value: '345',
-          unit: 'kcal',
+          value: dataEnergyBurned.toStringAsFixed(0),
+          unit: 'Kcal',
           label: 'Calories',
         ),
         StatsInfo(
-          value: '3.6',
-          unit: 'km',
+          value: dataDistanceDelta.toStringAsFixed(0),
+          unit: 'Meters',
           label: 'Distance',
         ),
         StatsInfo(
-          value: '1.5',
-          unit: 'hr',
-          label: 'Hours',
+          value: DateFormat('h:mm').format(dataTime),
+          unit: DateFormat('a').format(dataTime),
+          label: 'Time',
         ),
       ],
     );

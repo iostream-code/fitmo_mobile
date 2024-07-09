@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitmo_mobile/models/fitness_data.dart';
+import 'package:fitmo_mobile/models/activity_data.dart';
 import 'package:fitmo_mobile/pages/activity_page/widgets/activity_header.dart';
-import 'package:fitmo_mobile/services/fitness_database.dart';
+import 'package:fitmo_mobile/pages/statistic_page/controller/fitness_statistic_controller.dart';
+import 'package:fitmo_mobile/services/activity_database.dart';
 import 'package:flutter/material.dart';
 
-const List<String> fitnessType = <String>[
+const List<String> activityType = <String>[
   'RUNNING',
   'WALKING',
+  'DAILY',
 ];
 
 class ActivityAddPage extends StatefulWidget {
@@ -17,13 +19,24 @@ class ActivityAddPage extends StatefulWidget {
 }
 
 class _ActivityAddPageState extends State<ActivityAddPage> {
-  final TextEditingController _valueController = TextEditingController();
-  final TextEditingController _fitnessTypeController = TextEditingController();
-  final TextEditingController _unitController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _activityNameController = TextEditingController();
 
-  final FitnessDatabase _database = FitnessDatabase();
+  final ActivityDatabase _database = ActivityDatabase();
+  final controller = FitnessStatisticController();
 
-  String dropdownValue = fitnessType.first;
+  String dropdownValue = activityType.first;
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  Future<void> fetchData() async {
+    await Future.delayed(const Duration(seconds: 3));
+    controller.getHeartRateData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +44,44 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
       body: Column(
         children: [
           const ActivityHeader(),
-          formField(),
+          ValueListenableBuilder(
+            valueListenable: controller.heartRate,
+            builder: (context, value, child) {
+              double hr = 0;
+              double avgHr = 0;
+              double maxHr = 0;
+              double restHr = 0;
+              double countHr = 0;
+              double vo2Max = 0;
+
+              if (value.isNotEmpty) restHr = value[0].value;
+
+              for (final data in value) {
+                hr += data.value;
+                if (maxHr < data.value) maxHr = data.value;
+                if (data.value < restHr) restHr = data.value;
+                countHr++;
+              }
+
+              avgHr = hr / countHr;
+
+              return formField(
+                avgHr: avgHr,
+                maxHr: maxHr,
+                restHr: restHr,
+              );
+            },
+          ),
         ],
       ),
     );
   }
 
-  Widget formField() {
-    // Size fixedScreen = MediaQuery.of(context).size;
-
+  Widget formField({
+    required double maxHr,
+    required double restHr,
+    required double avgHr,
+  }) {
     return FormField(builder: (state) {
       return Padding(
         padding: const EdgeInsets.symmetric(
@@ -59,101 +101,29 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextField(
-                          controller: _valueController,
-                          decoration: const InputDecoration(
-                            labelText: "Value",
-                            labelStyle: TextStyle(
-                              color: Colors.black,
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
                         const SizedBox(
-                          height: 20,
+                          height: 20.0,
                         ),
                         DropdownMenu(
-                          // width: fixedScreen.width,
                           width: 296,
-                          controller: _fitnessTypeController,
-                          label: const Text("Fitness Type"),
-                          initialSelection: fitnessType.first,
-                          onSelected: (String? value) {
-                            setState(() {
-                              dropdownValue = value!;
-                            });
-                          },
-                          dropdownMenuEntries: fitnessType
-                              .map<DropdownMenuEntry<String>>((String value) {
-                            return DropdownMenuEntry<String>(
-                                value: value, label: value);
-                          }).toList(),
-                        ),
-                        TextField(
-                          controller: _unitController,
-                          decoration: const InputDecoration(
-                            labelText: "Unit",
-                            labelStyle: TextStyle(
-                              color: Colors.black,
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        DropdownMenu(
-                          // width: fixedScreen.width,
-                          width: 296,
-                          // controller: _fitnessTypeController,
+                          controller: _activityNameController,
                           label: const Text("Activity"),
-                          initialSelection: fitnessType.first,
+                          initialSelection: activityType.first,
                           onSelected: (String? value) {
                             setState(() {
                               dropdownValue = value!;
                             });
                           },
-                          dropdownMenuEntries: fitnessType
+                          dropdownMenuEntries: activityType
                               .map<DropdownMenuEntry<String>>((String value) {
                             return DropdownMenuEntry<String>(
                                 value: value, label: value);
                           }).toList(),
                         ),
-                        const TextField(
-                          // controller: _valueController,
-                          decoration: InputDecoration(
-                            labelText: "Resting Heart Rate",
-                            labelStyle: TextStyle(
-                              color: Colors.black,
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
-                        const TextField(
-                          // controller: _valueController,
-                          decoration: InputDecoration(
-                            labelText: "Maximum Heart Rate",
-                            labelStyle: TextStyle(
-                              color: Colors.black,
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
-                        const TextField(
-                          // controller: _valueController,
-                          decoration: InputDecoration(
-                            labelText: "Average Heart Rate",
+                        TextField(
+                          controller: _ageController,
+                          decoration: const InputDecoration(
+                            labelText: "Age",
                             labelStyle: TextStyle(
                               color: Colors.black,
                             ),
@@ -182,19 +152,37 @@ class _ActivityAddPageState extends State<ActivityAddPage> {
                   ),
                 ),
                 onPressed: () {
-                  // CHANGE THIS CODE !!!
-                  FitnessData data = FitnessData(
-                    value: int.parse(_valueController.text),
-                    unit: _unitController.text,
-                    fitnessType: _fitnessTypeController.text,
-                    dateFrom: Timestamp.now(),
-                    dateTo: Timestamp.now(),
+                  double age = double.parse(_ageController.text);
+                  double targetHr = maxHr - restHr;
+                  double limitMaxHr = 220 - age;
+                  double vo2Max = 15 * (limitMaxHr / restHr);
+                  String status = "";
+
+                  if (avgHr < (maxHr * 0.5)) {
+                    status = "GOOD";
+                  } else if (avgHr > (maxHr * 0.5) && avgHr < (maxHr * 0.7)) {
+                    status = "FAIR";
+                  } else {
+                    status = "BAD";
+                  }
+
+                  ActivityData data = ActivityData(
+                    activityName: _activityNameController.text,
+                    age: age.toInt(),
+                    detail: Detail(
+                      avgHr: avgHr.toInt(),
+                      maxHr: maxHr.toInt(),
+                      restHr: restHr.toInt(),
+                      status: status,
+                      vo2Max: vo2Max.toInt(),
+                    ),
+                    targetHr: targetHr.toInt(),
+                    timestamp: Timestamp.now(),
                   );
-                  _database.addFitnessData(data);
+                  _database.addActivityData(data);
                   Navigator.pop(context);
-                  _valueController.clear();
-                  _unitController.clear();
-                  _fitnessTypeController.clear();
+                  _ageController.clear();
+                  _activityNameController.clear();
                 },
               ),
             ),

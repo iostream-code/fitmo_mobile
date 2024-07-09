@@ -1,4 +1,5 @@
 import 'package:fitmo_mobile/models/activity_data.dart';
+import 'package:fitmo_mobile/pages/activity_page/activity_detail_page.dart';
 import 'package:fitmo_mobile/services/activity_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -65,12 +66,18 @@ class ActivityList extends StatelessWidget {
                     itemCount: activityData.length,
                     itemBuilder: (context, index) {
                       ActivityData data = activityData[index].data();
+                      String dataId = activityData[index].id;
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: ListTile(
                           onTap: () {
-                            Navigator.of(context).pushNamed('/activity/detail');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ActivityDetailPage(dataId: dataId)),
+                            );
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -81,13 +88,13 @@ class ActivityList extends StatelessWidget {
                           ),
                           tileColor: Colors.white,
                           leading: Text(
-                            data.value.toString(),
+                            data.detail.avgHr.toString(),
                             style: const TextStyle(
                               fontSize: 20,
                             ),
                           ),
                           title: Text(
-                            data.activity_name.capitalize,
+                            data.activityName.capitalize,
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -101,9 +108,9 @@ class ActivityList extends StatelessWidget {
                               fontSize: 10,
                             ),
                           ),
-                          trailing: data.status == 'bad'
+                          trailing: data.detail.status == 'BAD'
                               ? Image.asset('assets/emoticon/unhappy.png')
-                              : data.status == 'fair'
+                              : data.detail.status == 'FAIR'
                                   ? Image.asset('assets/emoticon/mood.png')
                                   : Image.asset('assets/emoticon/smile.png'),
                         ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:string_extensions/string_extensions.dart';
 
 class ActivityStatusBanner extends StatelessWidget {
-  const ActivityStatusBanner({super.key});
+  final String status;
+  const ActivityStatusBanner({super.key, required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +38,13 @@ class ActivityStatusBanner extends StatelessWidget {
                 ), //BoxShadow
               ],
             ),
-            child: Image.asset('assets/emoticon/smile.png'),
+            child: status == "BAD"
+                ? Image.asset('assets/emoticon/unhappy.png')
+                : status == "FAIR"
+                    ? Image.asset('assets/emoticon/mood.png')
+                    : Image.asset('assets/emoticon/smile.png'),
           ),
-          const Expanded(
+          Expanded(
             child: Padding(
               padding: EdgeInsets.all(12.0),
               child: Column(
@@ -46,7 +52,8 @@ class ActivityStatusBanner extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Good Condition",
+                    "${status.capitalize} Condition",
+                    // "Good Condition",
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
@@ -56,7 +63,7 @@ class ActivityStatusBanner extends StatelessWidget {
                     height: 2.0,
                   ),
                   Text(
-                    "Kondisi Anda dalam kondisi yang cukup baik.",
+                    "You're now in a ${status} condition, please aware for this information.",
                     style: TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w300,
